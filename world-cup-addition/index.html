@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>World Cup Addition Instructions</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      background: #5f96bf;
+      color: white;
+      padding: 70px 24px 30px;
+    }
+
+    .back-link {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      background: white;
+      color: #001f5c;
+      padding: 10px 14px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: bold;
+      z-index: 30;
+    }
+
+    .back-link:hover {
+      background: #e8f0ff;
+    }
+
+    .intro-screen {
+      width: 100%;
+      max-width: 1160px;
+      min-height: calc(100vh - 100px);
+      margin: 0 auto;
+      padding: 28px;
+      background:
+        radial-gradient(circle at 5% 92%, #0057d9 0 45px, transparent 46px),
+        radial-gradient(circle at 13% 95%, #0057d9 0 65px, transparent 66px),
+        radial-gradient(circle at 25% 98%, #0057d9 0 80px, transparent 81px),
+        radial-gradient(circle at 45% 100%, #004cbf 0 90px, transparent 91px),
+        radial-gradient(circle at 75% 99%, #0057d9 0 75px, transparent 76px),
+        radial-gradient(circle at 92% 94%, #0057d9 0 70px, transparent 71px),
+        linear-gradient(#5f96bf 0%, #5f96bf 62%, #00418f 100%);
+      border: 4px solid #00316e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.28);
+    }
+
+    .intro-card {
+      width: 100%;
+      max-width: 980px;
+      text-align: center;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: 56px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-shadow: 4px 4px 0 #00204d;
+    }
+
+    .intro-subtitle {
+      margin: 0 auto 20px;
+      max-width: 780px;
+      font-size: 22px;
+      line-height: 1.35;
+    }
+
+    .stage-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin: 20px 0;
+    }
+
+    .stage-card,
+    .rules-card {
+      background: rgba(255, 255, 255, 0.22);
+      border: 3px solid rgba(255, 255, 255, 0.6);
+      border-radius: 18px;
+      padding: 16px;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+    }
+
+    .stage-card h2,
+    .rules-card h2 {
+      margin: 0 0 8px;
+      font-size: 24px;
+      text-shadow: 2px 2px 0 #003b91;
+    }
+
+    .stage-card p,
+    .rules-card p {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.35;
+    }
+
+    .rules-card {
+      max-width: 850px;
+      margin: 18px auto;
+      text-align: left;
+    }
+
+    .rules-card ul {
+      margin: 10px 0 0;
+      padding-left: 24px;
+      font-size: 19px;
+      line-height: 1.45;
+    }
+
+    .start-game-button {
+      display: inline-block;
+      margin-top: 14px;
+      padding: 15px 30px;
+      background: #ffd166;
+      color: #00204d;
+      border-radius: 14px;
+      border: 3px solid white;
+      text-decoration: none;
+      font-size: 25px;
+      font-weight: bold;
+      box-shadow: 0 7px 0 rgba(0, 0, 0, 0.28);
+    }
+
+    .start-game-button:hover {
+      background: #ffe08a;
+      transform: translateY(2px);
+      box-shadow: 0 5px 0 rgba(0, 0, 0, 0.28);
+    }
+
+    @media (max-width: 850px) {
+      body {
+        padding: 65px 12px 20px;
+      }
+
+      .intro-screen {
+        padding: 18px;
+        align-items: flex-start;
+      }
+
+      h1 {
+        font-size: 36px;
+      }
+
+      .intro-subtitle {
+        font-size: 18px;
+      }
+
+      .stage-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .rules-card ul {
+        font-size: 16px;
+      }
+
+      .start-game-button {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <a class="back-link" href="../index.html">← Back to Arcade</a>
+
+  <main class="intro-screen">
+    <section class="intro-card">
+      <h1>World Cup Addition</h1>
+
+      <p class="intro-subtitle">
+        Add the squad numbers on the players' shirts. As your score grows, the challenge gets harder.
+      </p>
+
+      <div class="stage-grid">
+        <div class="stage-card">
+          <h2>Stage 1</h2>
+          <p>Add <strong>2 players</strong>. Reach a score of <strong>20</strong> to move to Stage 2.</p>
+        </div>
+
+        <div class="stage-card">
+          <h2>Stage 2</h2>
+          <p>Add <strong>3 players</strong>. Reach a score of <strong>30</strong> to unlock Stage 3.</p>
+        </div>
+
+        <div class="stage-card">
+          <h2>Stage 3</h2>
+          <p>Add <strong>4 players</strong>. Reach a score of <strong>40</strong> to win the World Cup.</p>
+        </div>
+      </div>
+
+      <div class="rules-card">
+        <h2>How to Play</h2>
+        <ul>
+          <li>Look carefully at each player's squad number.</li>
+          <li>Add the numbers together and type your answer.</li>
+          <li>Press <strong>Check</strong> to see if you are correct.</li>
+          <li>You have <strong>3 chances</strong>. Each wrong answer crosses out one goal.</li>
+          <li>If all 3 chances are used, your score resets and you go back to Stage 1.</li>
+          <li>Complete all stages to become the <strong>World Cup Champion</strong>.</li>
+        </ul>
+      </div>
+
+      <a class="start-game-button" href="game.html">Start Game</a>
+    </section>
+  </main>
+
+</body>
+</html>
