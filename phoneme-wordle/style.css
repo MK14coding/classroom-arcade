@@ -1,0 +1,311 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  background:
+    radial-gradient(circle at 12% 18%, rgba(255, 255, 255, 0.18), transparent 22%),
+    linear-gradient(135deg, #3a0ca3, #f72585);
+  color: white;
+  padding: 58px 14px 24px;
+}
+
+.back-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  background: white;
+  color: #3a0ca3;
+  padding: 9px 13px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: bold;
+  z-index: 20;
+}
+
+.back-link:hover {
+  background: #f1e8ff;
+}
+
+.game-screen {
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.14);
+  border: 3px solid rgba(255, 255, 255, 0.35);
+  border-radius: 24px;
+  padding: 18px;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.28);
+}
+
+.game-header {
+  text-align: center;
+}
+
+.game-header h1 {
+  margin: 0;
+  font-size: 46px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 4px 4px 0 #2b0066;
+}
+
+.game-header p {
+  font-size: 19px;
+  margin: 10px 0 16px;
+}
+
+.setup-card,
+.word-card,
+.legend {
+  background: rgba(0, 0, 0, 0.22);
+  border: 2px solid rgba(255, 255, 255, 0.28);
+  border-radius: 20px;
+}
+
+.setup-card {
+  padding: 14px;
+  margin-bottom: 14px;
+  text-align: center;
+}
+
+.setup-card label {
+  display: block;
+  font-size: 21px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.setup-row {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+select,
+input {
+  font-family: Arial, sans-serif;
+}
+
+select {
+  min-width: 260px;
+  min-height: 48px;
+  border-radius: 12px;
+  border: 3px solid white;
+  padding: 0 12px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #3a0ca3;
+  background: white;
+}
+
+button {
+  min-height: 48px;
+  padding: 0 18px;
+  border: none;
+  border-radius: 12px;
+  background: #ffd166;
+  color: #2b0066;
+  font-size: 19px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #ffe08a;
+}
+
+#focusInfo {
+  margin: 10px 0 0;
+  font-size: 17px;
+}
+
+.legend {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  margin-bottom: 14px;
+  overflow: hidden;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+}
+
+.legend-item p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.2;
+}
+
+.legend-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  border: 3px solid rgba(255, 255, 255, 0.8);
+  font-size: 25px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.word-card {
+  padding: 16px;
+  text-align: center;
+}
+
+.word-length {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.guess-grid {
+  display: grid;
+  gap: 8px;
+  max-width: 640px;
+  margin: 0 auto 16px;
+}
+
+.guess-row {
+  display: grid;
+  grid-template-columns: repeat(var(--word-length), 1fr);
+  gap: 8px;
+}
+
+.tile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  aspect-ratio: 1 / 1;
+  min-height: 48px;
+  border: 3px solid rgba(255, 255, 255, 0.7);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.18);
+  color: white;
+  font-size: 34px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.correct {
+  background: #2dc653;
+  color: #062b12;
+}
+
+.present {
+  background: #ffd166;
+  color: #3d2a00;
+}
+
+.absent {
+  background: #6c757d;
+  color: white;
+}
+
+.guess-entry {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+#guessInput {
+  width: 250px;
+  min-height: 52px;
+  border: 3px solid white;
+  border-radius: 12px;
+  padding: 0 14px;
+  font-size: 28px;
+  font-weight: bold;
+  text-align: center;
+  color: #2b0066;
+  text-transform: lowercase;
+}
+
+#guessInput:focus {
+  outline: none;
+  border-color: #ffd166;
+  box-shadow: 0 0 0 4px rgba(255, 209, 102, 0.32);
+}
+
+#message {
+  min-height: 30px;
+  margin: 14px 0 0;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.message-correct {
+  color: #b7ffbd;
+}
+
+.message-warning {
+  color: #ffd2d2;
+}
+
+.game-info {
+  display: flex;
+  justify-content: center;
+  gap: 22px;
+  flex-wrap: wrap;
+  font-size: 17px;
+}
+
+.game-info p {
+  margin: 10px 0 0;
+}
+
+@media (max-width: 760px) {
+  body {
+    padding: 58px 8px 18px;
+  }
+
+  .game-screen {
+    padding: 12px;
+  }
+
+  .game-header h1 {
+    font-size: 32px;
+  }
+
+  .game-header p {
+    font-size: 16px;
+  }
+
+  .setup-card label {
+    font-size: 18px;
+  }
+
+  .legend {
+    grid-template-columns: 1fr;
+  }
+
+  .legend-item {
+    padding: 10px;
+  }
+
+  .tile {
+    min-height: 38px;
+    font-size: 24px;
+    border-radius: 9px;
+  }
+
+  #guessInput {
+    width: 210px;
+    font-size: 24px;
+  }
+
+  #message {
+    font-size: 18px;
+  }
+}

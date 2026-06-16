@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Phoneme Wordle</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <a class="back-link" href="../index.html">← Back to Arcade</a>
+
+  <main class="game-screen">
+    <header class="game-header">
+      <h1>Phoneme Wordle</h1>
+      <p>Choose a phoneme, digraph or trigraph, then crack the mystery word.</p>
+    </header>
+
+    <section class="setup-card">
+      <label for="phonemeSelect">Choose your focus sound/spelling pattern</label>
+      <div class="setup-row">
+        <select id="phonemeSelect"></select>
+        <button id="newWordButton">New Word</button>
+      </div>
+      <p id="focusInfo"></p>
+    </section>
+
+    <section class="legend">
+      <div class="legend-item">
+        <span class="legend-box correct">a</span>
+        <p>Correct letter in the correct position</p>
+      </div>
+      <div class="legend-item">
+        <span class="legend-box present">a</span>
+        <p>Letter is in the word, but in the wrong position</p>
+      </div>
+      <div class="legend-item">
+        <span class="legend-box absent">a</span>
+        <p>Letter is not in the word</p>
+      </div>
+    </section>
+
+    <section class="word-card">
+      <div class="word-length" id="wordLengthText">Word length: 5 letters</div>
+      <div id="guessGrid" class="guess-grid"></div>
+
+      <div class="guess-entry">
+        <input id="guessInput" type="text" autocomplete="off" />
+        <button id="guessButton">Check Guess</button>
+      </div>
+
+      <p id="message"></p>
+
+      <div class="game-info">
+        <p>Guesses: <strong id="guessCount">0</strong> / <strong id="maxGuesses">6</strong></p>
+        <p>Focus: <strong id="focusDisplay">sh</strong></p>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
