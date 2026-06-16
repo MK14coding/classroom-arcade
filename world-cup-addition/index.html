@@ -4,39 +4,58 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>World Cup Addition</title>
-
-  <link rel="stylesheet" href="style.css" />
+  <title>World Cup Addition Instructions</title>
 
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      display: block;
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      background: #5f96bf;
+      color: white;
+      padding: 70px 24px 30px;
+    }
+
+    .back-link {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      background: white;
+      color: #001f5c;
+      padding: 10px 14px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: bold;
+      z-index: 30;
+    }
+
+    .back-link:hover {
+      background: #e8f0ff;
     }
 
     .intro-screen {
       width: 100%;
       max-width: 1160px;
-      min-height: calc(100vh - 105px);
+      min-height: calc(100vh - 100px);
       margin: 0 auto;
       padding: 28px;
-      color: white;
       background:
-        radial-gradient(circle at 12% 12%, rgba(255, 255, 255, 0.2), transparent 22%),
-        radial-gradient(circle at 88% 18%, rgba(255, 255, 255, 0.16), transparent 20%),
-        linear-gradient(135deg, #00316e, #0066cc 50%, #009688);
+        radial-gradient(circle at 5% 92%, #0057d9 0 45px, transparent 46px),
+        radial-gradient(circle at 13% 95%, #0057d9 0 65px, transparent 66px),
+        radial-gradient(circle at 25% 98%, #0057d9 0 80px, transparent 81px),
+        radial-gradient(circle at 45% 100%, #004cbf 0 90px, transparent 91px),
+        radial-gradient(circle at 75% 99%, #0057d9 0 75px, transparent 76px),
+        radial-gradient(circle at 92% 94%, #0057d9 0 70px, transparent 71px),
+        linear-gradient(#5f96bf 0%, #5f96bf 62%, #00418f 100%);
       border: 4px solid #00316e;
-      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.28);
       display: flex;
       align-items: center;
       justify-content: center;
-    }
-
-    .intro-screen.hidden {
-      display: none;
-    }
-
-    .game-page-hidden {
-      display: none !important;
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.28);
     }
 
     .intro-card {
@@ -45,9 +64,9 @@
       text-align: center;
     }
 
-    .intro-card h1 {
-      margin: 0 0 8px;
-      font-size: 54px;
+    h1 {
+      margin: 0 0 10px;
+      font-size: 56px;
       text-transform: uppercase;
       letter-spacing: 2px;
       text-shadow: 4px 4px 0 #00204d;
@@ -64,29 +83,29 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 14px;
-      margin: 18px 0;
+      margin: 20px 0;
     }
 
     .stage-card,
     .rules-card {
-      background: rgba(255, 255, 255, 0.18);
-      border: 3px solid rgba(255, 255, 255, 0.55);
+      background: rgba(255, 255, 255, 0.22);
+      border: 3px solid rgba(255, 255, 255, 0.6);
       border-radius: 18px;
       padding: 16px;
-      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.22);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
     }
 
     .stage-card h2,
     .rules-card h2 {
       margin: 0 0 8px;
-      font-size: 23px;
-      text-shadow: 2px 2px 0 #00204d;
+      font-size: 24px;
+      text-shadow: 2px 2px 0 #003b91;
     }
 
     .stage-card p,
     .rules-card p {
       margin: 0;
-      font-size: 17px;
+      font-size: 18px;
       line-height: 1.35;
     }
 
@@ -99,42 +118,41 @@
     .rules-card ul {
       margin: 10px 0 0;
       padding-left: 24px;
-      font-size: 18px;
+      font-size: 19px;
       line-height: 1.45;
     }
 
-    #startGameButton {
+    .start-game-button {
       display: inline-block;
       margin-top: 14px;
-      padding: 15px 28px;
+      padding: 15px 30px;
       background: #ffd166;
       color: #00204d;
       border-radius: 14px;
       border: 3px solid white;
-      font-size: 24px;
+      text-decoration: none;
+      font-size: 25px;
       font-weight: bold;
       box-shadow: 0 7px 0 rgba(0, 0, 0, 0.28);
-      cursor: pointer;
     }
 
-    #startGameButton:hover {
+    .start-game-button:hover {
       background: #ffe08a;
       transform: translateY(2px);
       box-shadow: 0 5px 0 rgba(0, 0, 0, 0.28);
     }
 
-    .page-layout {
-      margin: 0 auto;
-    }
-
     @media (max-width: 850px) {
+      body {
+        padding: 65px 12px 20px;
+      }
+
       .intro-screen {
-        min-height: calc(100vh - 88px);
         padding: 18px;
         align-items: flex-start;
       }
 
-      .intro-card h1 {
+      h1 {
         font-size: 36px;
       }
 
@@ -150,20 +168,18 @@
         font-size: 16px;
       }
 
-      #startGameButton {
+      .start-game-button {
         font-size: 20px;
       }
     }
   </style>
-
 </head>
 <body>
 
   <a class="back-link" href="../index.html">← Back to Arcade</a>
 
-
-  <section class="intro-screen" id="introScreen">
-    <div class="intro-card">
+  <main class="intro-screen">
+    <section class="intro-card">
       <h1>World Cup Addition</h1>
 
       <p class="intro-subtitle">
@@ -173,17 +189,17 @@
       <div class="stage-grid">
         <div class="stage-card">
           <h2>Stage 1</h2>
-          <p>Add <strong>2 players</strong>. Reach a score of <strong>20</strong> to move to the next stage.</p>
+          <p>Add <strong>2 players</strong>. Reach a score of <strong>20</strong> to move to Stage 2.</p>
         </div>
 
         <div class="stage-card">
           <h2>Stage 2</h2>
-          <p>Add <strong>3 players</strong>. Reach a score of <strong>30</strong> to unlock the final stage.</p>
+          <p>Add <strong>3 players</strong>. Reach a score of <strong>30</strong> to unlock Stage 3.</p>
         </div>
 
         <div class="stage-card">
           <h2>Stage 3</h2>
-          <p>Add <strong>4 players</strong>. Reach a score of <strong>40</strong> to become World Cup Champion.</p>
+          <p>Add <strong>4 players</strong>. Reach a score of <strong>40</strong> to win the World Cup.</p>
         </div>
       </div>
 
@@ -199,139 +215,9 @@
         </ul>
       </div>
 
-      <button id="startGameButton" type="button">Start Game</button>
-    </div>
-  </section>
-
-
-  <div class="page-layout game-page-hidden" id="gamePage">
-
-    <main class="game-screen">
-      <h1>World Cup Addition</h1>
-
-      <p class="instructions" id="instructions">
-        Add up the 2 numbers of these players' squad numbers.
-      </p>
-
-      <section class="players-area" id="playersArea">
-        <div class="player">
-          <div class="shirt" id="shirtOne">
-            <div class="shirt-name" id="nameOne">PLAYER</div>
-            <div class="shirt-number" id="numberOne">0</div>
-          </div>
-          <p id="countryOne">Player - Country</p>
-        </div>
-
-        <div class="plus">+</div>
-
-        <div class="player">
-          <div class="shirt" id="shirtTwo">
-            <div class="shirt-name" id="nameTwo">PLAYER</div>
-            <div class="shirt-number" id="numberTwo">0</div>
-          </div>
-          <p id="countryTwo">Player - Country</p>
-        </div>
-
-        <div class="plus plus-extra" id="plusThree">+</div>
-
-        <div class="player player-extra" id="playerThreeBox">
-          <div class="shirt" id="shirtThree">
-            <div class="shirt-name" id="nameThree">PLAYER</div>
-            <div class="shirt-number" id="numberThree">0</div>
-          </div>
-          <p id="countryThree">Player - Country</p>
-        </div>
-
-        <div class="plus plus-extra plus-four" id="plusFour">+</div>
-
-        <div class="player player-extra player-four" id="playerFourBox">
-          <div class="shirt" id="shirtFour">
-            <div class="shirt-name" id="nameFour">PLAYER</div>
-            <div class="shirt-number" id="numberFour">0</div>
-          </div>
-          <p id="countryFour">Player - Country</p>
-        </div>
-      </section>
-
-      <section class="answer-area">
-        <label for="answerInput">Enter your answer</label>
-
-        <span class="equals">=</span>
-
-        <input id="answerInput" type="number" />
-
-        <button id="checkButton">Check</button>
-
-        <div class="score-box">
-          <span>Score</span>
-          <strong id="score">0</strong>
-        </div>
-      </section>
-
-      <p id="message"></p>
-
-      <button id="nextButton">Next Question</button>
-    </main>
-
-    <aside class="goals-panel">
-      <h2>Chances</h2>
-
-      <div class="goal-life" id="goalOne">
-        🥅
-        <span class="cross">✕</span>
-      </div>
-
-      <div class="goal-life" id="goalTwo">
-        🥅
-        <span class="cross">✕</span>
-      </div>
-
-      <div class="goal-life" id="goalThree">
-        🥅
-        <span class="cross">✕</span>
-      </div>
-    </aside>
-
-  </div>
-
-  <section class="winner-screen" id="winnerScreen">
-    <div class="firework firework-one"></div>
-    <div class="firework firework-two"></div>
-    <div class="firework firework-three"></div>
-
-    <div class="winner-card">
-      <div class="trophy-picture" aria-label="World Cup trophy picture">
-        <div class="trophy-top"></div>
-        <div class="trophy-stem"></div>
-        <div class="trophy-base"></div>
-      </div>
-
-      <h2>World Cup Champion!</h2>
-      <p>You completed the 2-player, 3-player and 4-player challenges.</p>
-      <button id="playAgainButton">Play Again</button>
-    </div>
-  </section>
-
-  <script src="script.js"></script>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const introScreen = document.getElementById("introScreen");
-      const gamePage = document.getElementById("gamePage");
-      const startGameButton = document.getElementById("startGameButton");
-      const answerInput = document.getElementById("answerInput");
-
-      startGameButton.addEventListener("click", function () {
-        introScreen.classList.add("hidden");
-        gamePage.classList.remove("game-page-hidden");
-        window.scrollTo(0, 0);
-
-        if (answerInput) {
-          answerInput.focus();
-        }
-      });
-    });
-  </script>
+      <a class="start-game-button" href="game.html">Start Game</a>
+    </section>
+  </main>
 
 </body>
 </html>
