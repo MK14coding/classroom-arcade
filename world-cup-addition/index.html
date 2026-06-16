@@ -7,12 +7,198 @@
   <title>World Cup Addition</title>
 
   <link rel="stylesheet" href="style.css" />
+
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      display: block;
+    }
+
+    .intro-screen {
+      width: 100%;
+      max-width: 1160px;
+      min-height: calc(100vh - 110px);
+      margin: 0 auto 28px;
+      padding: 28px;
+      color: white;
+      background:
+        radial-gradient(circle at 12% 12%, rgba(255, 255, 255, 0.18), transparent 22%),
+        radial-gradient(circle at 86% 18%, rgba(255, 255, 255, 0.16), transparent 20%),
+        linear-gradient(135deg, #00316e, #0066cc 50%, #009688);
+      border: 4px solid #00316e;
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.28);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .intro-card {
+      width: 100%;
+      max-width: 980px;
+      text-align: center;
+    }
+
+    .intro-card h1 {
+      margin: 0 0 8px;
+      font-size: 54px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-shadow: 4px 4px 0 #00204d;
+    }
+
+    .intro-subtitle {
+      margin: 0 auto 22px;
+      max-width: 780px;
+      font-size: 22px;
+      line-height: 1.35;
+    }
+
+    .stage-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin: 20px 0;
+    }
+
+    .stage-card,
+    .rules-card {
+      background: rgba(255, 255, 255, 0.18);
+      border: 3px solid rgba(255, 255, 255, 0.55);
+      border-radius: 18px;
+      padding: 16px;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.22);
+    }
+
+    .stage-card h2,
+    .rules-card h2 {
+      margin: 0 0 8px;
+      font-size: 23px;
+      text-shadow: 2px 2px 0 #00204d;
+    }
+
+    .stage-card p,
+    .rules-card p {
+      margin: 0;
+      font-size: 17px;
+      line-height: 1.35;
+    }
+
+    .rules-card {
+      max-width: 850px;
+      margin: 18px auto;
+      text-align: left;
+    }
+
+    .rules-card ul {
+      margin: 10px 0 0;
+      padding-left: 24px;
+      font-size: 18px;
+      line-height: 1.45;
+    }
+
+    .start-game-button {
+      display: inline-block;
+      margin-top: 14px;
+      padding: 15px 28px;
+      background: #ffd166;
+      color: #00204d;
+      border-radius: 14px;
+      border: 3px solid white;
+      text-decoration: none;
+      font-size: 24px;
+      font-weight: bold;
+      box-shadow: 0 7px 0 rgba(0, 0, 0, 0.28);
+    }
+
+    .start-game-button:hover {
+      background: #ffe08a;
+      transform: translateY(2px);
+      box-shadow: 0 5px 0 rgba(0, 0, 0, 0.28);
+    }
+
+    .page-layout {
+      margin: 0 auto;
+    }
+
+    @media (max-width: 850px) {
+      .intro-screen {
+        padding: 18px;
+      }
+
+      .intro-card h1 {
+        font-size: 36px;
+      }
+
+      .intro-subtitle {
+        font-size: 18px;
+      }
+
+      .stage-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .rules-card ul {
+        font-size: 16px;
+      }
+
+      .start-game-button {
+        font-size: 20px;
+      }
+    }
+  </style>
+
 </head>
 <body>
 
   <a class="back-link" href="../index.html">← Back to Arcade</a>
 
-  <div class="page-layout">
+
+  <section class="intro-screen">
+    <div class="intro-card">
+      <h1>World Cup Addition</h1>
+
+      <p class="intro-subtitle">
+        Add the squad numbers on the players' shirts. As your score grows, the challenge gets harder.
+      </p>
+
+      <div class="stage-grid">
+        <div class="stage-card">
+          <h2>Stage 1</h2>
+          <p>Add <strong>2 players</strong>. Reach a score of <strong>20</strong> to move to the next stage.</p>
+        </div>
+
+        <div class="stage-card">
+          <h2>Stage 2</h2>
+          <p>Add <strong>3 players</strong>. Reach a score of <strong>30</strong> to unlock the final stage.</p>
+        </div>
+
+        <div class="stage-card">
+          <h2>Stage 3</h2>
+          <p>Add <strong>4 players</strong>. Reach a score of <strong>40</strong> to win the World Cup.</p>
+        </div>
+      </div>
+
+      <div class="rules-card">
+        <h2>How to Play</h2>
+        <ul>
+          <li>Look carefully at each player's squad number.</li>
+          <li>Add the numbers together and type your answer.</li>
+          <li>Press <strong>Check</strong> to see if you are correct.</li>
+          <li>You have <strong>3 chances</strong>. Each wrong answer crosses out one goal.</li>
+          <li>If all 3 chances are used, your score resets and you go back to Stage 1.</li>
+          <li>Complete all stages to become the <strong>World Cup Champion</strong>.</li>
+        </ul>
+      </div>
+
+      <a class="start-game-button" href="#game">Start Game</a>
+    </div>
+  </section>
+
+
+  <div class="page-layout" id="game">
 
     <main class="game-screen">
       <h1>World Cup Addition</h1>
