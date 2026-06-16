@@ -4,182 +4,795 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>World Cup Addition Instructions</title>
+  <title>World Cup Addition</title>
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
+* {
+  box-sizing: border-box;
+}
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: Arial, sans-serif;
-      background: #5f96bf;
-      color: white;
-      padding: 70px 24px 30px;
-    }
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  background: #5f96bf;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 70px 24px 30px;
+}
 
-    .back-link {
-      position: fixed;
-      top: 15px;
-      left: 15px;
-      background: white;
-      color: #001f5c;
-      padding: 10px 14px;
-      border-radius: 10px;
-      text-decoration: none;
-      font-weight: bold;
-      z-index: 30;
-    }
+.back-link {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  background: white;
+  color: #001f5c;
+  padding: 10px 14px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: bold;
+  z-index: 30;
+}
 
-    .back-link:hover {
-      background: #e8f0ff;
-    }
+.back-link:hover {
+  background: #e8f0ff;
+}
 
-    .intro-screen {
-      width: 100%;
-      max-width: 1160px;
-      min-height: calc(100vh - 100px);
-      margin: 0 auto;
-      padding: 28px;
-      background:
-        radial-gradient(circle at 5% 92%, #0057d9 0 45px, transparent 46px),
-        radial-gradient(circle at 13% 95%, #0057d9 0 65px, transparent 66px),
-        radial-gradient(circle at 25% 98%, #0057d9 0 80px, transparent 81px),
-        radial-gradient(circle at 45% 100%, #004cbf 0 90px, transparent 91px),
-        radial-gradient(circle at 75% 99%, #0057d9 0 75px, transparent 76px),
-        radial-gradient(circle at 92% 94%, #0057d9 0 70px, transparent 71px),
-        linear-gradient(#5f96bf 0%, #5f96bf 62%, #00418f 100%);
-      border: 4px solid #00316e;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.28);
-    }
+.page-layout {
+  width: 100%;
+  max-width: 1160px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 110px;
+  gap: 24px;
+  align-items: start;
+}
 
-    .intro-card {
-      width: 100%;
-      max-width: 980px;
-      text-align: center;
-    }
+.game-screen {
+  width: 100%;
+  min-height: 560px;
+  padding: 25px;
+  text-align: center;
+  color: white;
+  background:
+    radial-gradient(circle at 5% 92%, #0057d9 0 45px, transparent 46px),
+    radial-gradient(circle at 13% 95%, #0057d9 0 65px, transparent 66px),
+    radial-gradient(circle at 25% 98%, #0057d9 0 80px, transparent 81px),
+    radial-gradient(circle at 45% 100%, #004cbf 0 90px, transparent 91px),
+    radial-gradient(circle at 75% 99%, #0057d9 0 75px, transparent 76px),
+    radial-gradient(circle at 92% 94%, #0057d9 0 70px, transparent 71px),
+    linear-gradient(#5f96bf 0%, #5f96bf 62%, #00418f 100%);
+  border: 4px solid #00316e;
+  overflow: hidden;
+}
 
-    h1 {
-      margin: 0 0 10px;
-      font-size: 56px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      text-shadow: 4px 4px 0 #00204d;
-    }
+.goals-panel {
+  background: rgba(255, 255, 255, 0.22);
+  border: 3px solid rgba(255, 255, 255, 0.6);
+  border-radius: 18px;
+  padding: 14px;
+  text-align: center;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+}
 
-    .intro-subtitle {
-      margin: 0 auto 20px;
-      max-width: 780px;
-      font-size: 22px;
-      line-height: 1.35;
-    }
+.goals-panel h2 {
+  margin: 0 0 10px;
+  font-size: 20px;
+  color: white;
+  text-shadow: 2px 2px 0 #003b91;
+}
 
-    .stage-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-      margin: 20px 0;
-    }
+.goal-life {
+  position: relative;
+  font-size: 44px;
+  margin: 8px auto;
+  width: 58px;
+  height: 58px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-    .stage-card,
-    .rules-card {
-      background: rgba(255, 255, 255, 0.22);
-      border: 3px solid rgba(255, 255, 255, 0.6);
-      border-radius: 18px;
-      padding: 16px;
-      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
-    }
+.cross {
+  display: none;
+  position: absolute;
+  font-size: 64px;
+  color: red;
+  font-weight: bold;
+  text-shadow: 2px 2px 0 white;
+  top: -12px;
+  left: 4px;
+}
 
-    .stage-card h2,
-    .rules-card h2 {
-      margin: 0 0 8px;
-      font-size: 24px;
-      text-shadow: 2px 2px 0 #003b91;
-    }
+.goal-life.crossed .cross {
+  display: block;
+}
 
-    .stage-card p,
-    .rules-card p {
-      margin: 0;
-      font-size: 18px;
-      line-height: 1.35;
-    }
+h1 {
+  margin: 0;
+  font-size: 54px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: black;
+  text-shadow: 4px 5px 0 #003b91;
+}
 
-    .rules-card {
-      max-width: 850px;
-      margin: 18px auto;
-      text-align: left;
-    }
+.instructions {
+  font-size: 30px;
+  margin: 30px 0;
+}
 
-    .rules-card ul {
-      margin: 10px 0 0;
-      padding-left: 24px;
-      font-size: 19px;
-      line-height: 1.45;
-    }
+.players-area {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 55px;
+  margin-bottom: 35px;
+}
 
-    .start-game-button {
-      display: inline-block;
-      margin-top: 14px;
-      padding: 15px 30px;
-      background: #ffd166;
-      color: #00204d;
-      border-radius: 14px;
-      border: 3px solid white;
-      text-decoration: none;
-      font-size: 25px;
-      font-weight: bold;
-      box-shadow: 0 7px 0 rgba(0, 0, 0, 0.28);
-    }
+.player {
+  width: 220px;
+  max-width: 220px;
+}
 
-    .start-game-button:hover {
-      background: #ffe08a;
-      transform: translateY(2px);
-      box-shadow: 0 5px 0 rgba(0, 0, 0, 0.28);
-    }
+.player p {
+  margin-top: 10px;
+  font-size: 18px;
+  font-weight: bold;
+}
 
-    @media (max-width: 850px) {
-      body {
-        padding: 65px 12px 20px;
-      }
+.plus {
+  font-size: 58px;
+  font-weight: bold;
+  color: #002b78;
+  margin-top: 70px;
+}
 
-      .intro-screen {
-        padding: 18px;
-        align-items: flex-start;
-      }
+.player-extra,
+.plus-extra {
+  display: none;
+}
 
-      h1 {
-        font-size: 36px;
-      }
+.players-area.level-three,
+.players-area.level-four {
+  gap: 16px;
+}
 
-      .intro-subtitle {
-        font-size: 18px;
-      }
+.players-area.level-three .player,
+.players-area.level-four .player {
+  width: 155px;
+  max-width: 155px;
+}
 
-      .stage-grid {
-        grid-template-columns: 1fr;
-      }
+.players-area.level-three .shirt,
+.players-area.level-four .shirt {
+  width: 140px;
+  height: 150px;
+}
 
-      .rules-card ul {
-        font-size: 16px;
-      }
+.players-area.level-three .shirt-name,
+.players-area.level-four .shirt-name {
+  padding-top: 36px;
+  font-size: 13px;
+}
 
-      .start-game-button {
-        font-size: 20px;
-      }
-    }
+.players-area.level-three .shirt-number,
+.players-area.level-four .shirt-number {
+  font-size: 54px;
+}
+
+.players-area.level-three .player p,
+.players-area.level-four .player p {
+  font-size: 13px;
+}
+
+.players-area.level-three .plus,
+.players-area.level-four .plus {
+  font-size: 42px;
+  margin-top: 55px;
+}
+
+.players-area.level-three .player-extra,
+.players-area.level-three .plus-extra,
+.players-area.level-four .player-extra,
+.players-area.level-four .plus-extra {
+  display: block;
+}
+
+.players-area.level-three .player-four,
+.players-area.level-three .plus-four {
+  display: none;
+}
+
+.shirt {
+  width: 185px;
+  height: 190px;
+  margin: auto;
+  position: relative;
+  background: linear-gradient(
+    90deg,
+    var(--colour1),
+    var(--colour2),
+    var(--colour3)
+  );
+  clip-path: polygon(
+    12% 18%,
+    30% 7%,
+    37% 0,
+    63% 0,
+    70% 7%,
+    88% 18%,
+    78% 42%,
+    70% 36%,
+    70% 100%,
+    30% 100%,
+    30% 36%,
+    22% 42%
+  );
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.35);
+  border: 3px solid rgba(255, 255, 255, 0.45);
+}
+
+.shirt-name {
+  padding-top: 48px;
+  font-size: 17px;
+  font-weight: bold;
+  color: var(--textColour);
+  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.45);
+}
+
+.shirt-number {
+  font-size: 72px;
+  font-weight: bold;
+  line-height: 1;
+  color: var(--textColour);
+  text-shadow: 2px 2px 2px rgba(255, 255, 255, 0.45);
+}
+
+.answer-area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+label,
+.score-box span {
+  font-size: 34px;
+  font-weight: bold;
+  text-shadow: 3px 3px 0 #00418f;
+}
+
+.equals {
+  font-size: 36px;
+  font-weight: bold;
+  color: #002b78;
+}
+
+input {
+  width: 150px;
+  height: 55px;
+  font-size: 34px;
+  text-align: center;
+  border: none;
+  outline: none;
+}
+
+button {
+  height: 55px;
+  padding: 0 22px;
+  font-size: 22px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  background: #001f5c;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #003c9e;
+}
+
+.score-box {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-left: 20px;
+}
+
+#score {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 85px;
+  height: 55px;
+  background: white;
+  color: #001f5c;
+  font-size: 32px;
+}
+
+#message {
+  min-height: 35px;
+  font-size: 28px;
+  font-weight: bold;
+  margin: 20px 0 10px;
+}
+
+#nextButton {
+  display: none;
+}
+
+.correct {
+  color: #b7ffbd;
+}
+
+.incorrect {
+  color: #ffd2d2;
+}
+
+/* Winner screen and animated fireworks */
+.winner-screen {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: radial-gradient(circle at center, rgba(0, 48, 120, 0.94), rgba(0, 12, 40, 0.98));
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  color: white;
+  text-align: center;
+  padding: 20px;
+}
+
+.winner-screen.show {
+  display: flex;
+}
+
+.winner-card {
+  position: relative;
+  z-index: 3;
+  width: min(90vw, 560px);
+  padding: 34px 26px;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.14);
+  border: 4px solid rgba(255, 255, 255, 0.45);
+  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.35);
+}
+
+.winner-card h2 {
+  margin: 15px 0 8px;
+  font-size: 44px;
+  text-transform: uppercase;
+  text-shadow: 4px 4px 0 #003b91;
+}
+
+.winner-card p {
+  font-size: 22px;
+  margin-bottom: 22px;
+}
+
+.trophy-picture {
+  width: 160px;
+  height: 210px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.trophy-top {
+  width: 130px;
+  height: 130px;
+  margin: 0 auto;
+  background: radial-gradient(circle at 35% 25%, #fff7a8, #f6c83f 45%, #a86d00 100%);
+  border-radius: 50% 50% 44% 44%;
+  box-shadow: inset -14px -16px 0 rgba(0, 0, 0, 0.18), 0 0 25px rgba(255, 220, 80, 0.8);
+}
+
+.trophy-top::before,
+.trophy-top::after {
+  content: "";
+  position: absolute;
+  top: 52px;
+  width: 36px;
+  height: 62px;
+  border: 10px solid #f6c83f;
+  border-radius: 50%;
+}
+
+.trophy-top::before {
+  left: -2px;
+}
+
+.trophy-top::after {
+  right: -2px;
+}
+
+.trophy-stem {
+  width: 44px;
+  height: 58px;
+  margin: -4px auto 0;
+  background: linear-gradient(#f6c83f, #b87800);
+  border-radius: 10px;
+}
+
+.trophy-base {
+  width: 120px;
+  height: 28px;
+  margin: 0 auto;
+  background: linear-gradient(#f6c83f, #8b5a00);
+  border-radius: 10px 10px 18px 18px;
+}
+
+.firework {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  animation: explode 1.4s infinite ease-out;
+}
+
+.firework-one {
+  left: 18%;
+  top: 22%;
+  background: #ffdf00;
+  box-shadow:
+    0 -55px #ffdf00,
+    39px -39px #ff4d6d,
+    55px 0 #4cc9f0,
+    39px 39px #ffffff,
+    0 55px #ff4d6d,
+    -39px 39px #ffdf00,
+    -55px 0 #ffffff,
+    -39px -39px #4cc9f0;
+}
+
+.firework-two {
+  right: 18%;
+  top: 28%;
+  background: #ffffff;
+  animation-delay: 0.35s;
+  box-shadow:
+    0 -50px #ffffff,
+    35px -35px #ffd166,
+    50px 0 #06d6a0,
+    35px 35px #ffffff,
+    0 50px #06d6a0,
+    -35px 35px #ffd166,
+    -50px 0 #ffffff,
+    -35px -35px #06d6a0;
+}
+
+.firework-three {
+  left: 50%;
+  top: 15%;
+  background: #ff4d6d;
+  animation-delay: 0.7s;
+  box-shadow:
+    0 -45px #ff4d6d,
+    32px -32px #ffffff,
+    45px 0 #ffdf00,
+    32px 32px #4cc9f0,
+    0 45px #ffffff,
+    -32px 32px #ffdf00,
+    -45px 0 #4cc9f0,
+    -32px -32px #ffffff;
+}
+
+@keyframes explode {
+  0% {
+    transform: scale(0.25);
+    opacity: 0;
+  }
+
+  35% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1.45);
+    opacity: 0;
+  }
+}
+
+@media (max-width: 900px) {
+  body {
+    align-items: flex-start;
+    padding: 70px 12px 20px;
+  }
+
+  .page-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .goals-panel {
+    order: -1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    max-width: 340px;
+    margin: 0 auto;
+  }
+
+  .goals-panel h2 {
+    margin: 0 8px 0 0;
+    font-size: 18px;
+  }
+
+  .goal-life {
+    font-size: 34px;
+    width: 44px;
+    height: 44px;
+    margin: 0;
+  }
+
+  .cross {
+    font-size: 50px;
+    top: -8px;
+    left: 2px;
+  }
+
+  .game-screen {
+    min-height: auto;
+    padding: 22px 12px;
+  }
+
+  h1 {
+    font-size: 34px;
+  }
+
+  .instructions {
+    font-size: 21px;
+  }
+
+  .players-area {
+    gap: 18px;
+  }
+
+  .player {
+    width: 145px;
+    max-width: 145px;
+  }
+
+  .shirt {
+    width: 135px;
+    height: 145px;
+  }
+
+  .shirt-name {
+    padding-top: 36px;
+    font-size: 13px;
+  }
+
+  .shirt-number {
+    font-size: 52px;
+  }
+
+  .player p {
+    font-size: 14px;
+  }
+
+  .plus {
+    font-size: 36px;
+    margin-top: 48px;
+  }
+
+  .players-area.level-three,
+  .players-area.level-four {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .players-area.level-three .player,
+  .players-area.level-four .player {
+    width: 132px;
+    max-width: 132px;
+  }
+
+  .players-area.level-three .shirt,
+  .players-area.level-four .shirt {
+    width: 118px;
+    height: 128px;
+  }
+
+  .players-area.level-three .shirt-name,
+  .players-area.level-four .shirt-name {
+    padding-top: 31px;
+    font-size: 12px;
+  }
+
+  .players-area.level-three .shirt-number,
+  .players-area.level-four .shirt-number {
+    font-size: 46px;
+  }
+
+  .players-area.level-three .player p,
+  .players-area.level-four .player p {
+    font-size: 12px;
+  }
+
+  label,
+  .score-box span {
+    font-size: 24px;
+  }
+
+  .score-box {
+    margin-left: 0;
+  }
+
+  .winner-card h2 {
+    font-size: 32px;
+  }
+
+  .winner-card p {
+    font-size: 18px;
+  }
+
+  .trophy-picture {
+    width: 130px;
+    height: 175px;
+  }
+
+  .trophy-top {
+    width: 105px;
+    height: 105px;
+  }
+}
+
+
+
+/* Instructions page additions */
+body {
+  display: block;
+}
+
+.intro-screen {
+  width: 100%;
+  max-width: 1160px;
+  min-height: calc(100vh - 100px);
+  margin: 0 auto;
+  padding: 28px;
+  color: white;
+  background:
+    radial-gradient(circle at 5% 92%, #0057d9 0 45px, transparent 46px),
+    radial-gradient(circle at 13% 95%, #0057d9 0 65px, transparent 66px),
+    radial-gradient(circle at 25% 98%, #0057d9 0 80px, transparent 81px),
+    radial-gradient(circle at 45% 100%, #004cbf 0 90px, transparent 91px),
+    radial-gradient(circle at 75% 99%, #0057d9 0 75px, transparent 76px),
+    radial-gradient(circle at 92% 94%, #0057d9 0 70px, transparent 71px),
+    linear-gradient(#5f96bf 0%, #5f96bf 62%, #00418f 100%);
+  border: 4px solid #00316e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.28);
+}
+
+.intro-card {
+  width: 100%;
+  max-width: 980px;
+  text-align: center;
+}
+
+.intro-card h1 {
+  margin: 0 0 10px;
+  font-size: 56px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 4px 4px 0 #00204d;
+}
+
+.intro-subtitle {
+  margin: 0 auto 20px;
+  max-width: 780px;
+  font-size: 22px;
+  line-height: 1.35;
+}
+
+.stage-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin: 20px 0;
+}
+
+.stage-card,
+.rules-card {
+  background: rgba(255, 255, 255, 0.22);
+  border: 3px solid rgba(255, 255, 255, 0.6);
+  border-radius: 18px;
+  padding: 16px;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+}
+
+.stage-card h2,
+.rules-card h2 {
+  margin: 0 0 8px;
+  font-size: 24px;
+  text-shadow: 2px 2px 0 #003b91;
+}
+
+.stage-card p {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.35;
+}
+
+.rules-card {
+  max-width: 850px;
+  margin: 18px auto;
+  text-align: left;
+}
+
+.rules-card ul {
+  margin: 10px 0 0;
+  padding-left: 24px;
+  font-size: 19px;
+  line-height: 1.45;
+}
+
+.start-game-button {
+  display: inline-block;
+  margin-top: 14px;
+  padding: 15px 30px;
+  background: #ffd166;
+  color: #00204d;
+  border-radius: 14px;
+  border: 3px solid white;
+  font-size: 25px;
+  font-weight: bold;
+  box-shadow: 0 7px 0 rgba(0, 0, 0, 0.28);
+  cursor: pointer;
+}
+
+.start-game-button:hover {
+  background: #ffe08a;
+  transform: translateY(2px);
+  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.28);
+}
+
+#gamePage {
+  margin: 0 auto;
+}
+
+@media (max-width: 850px) {
+  .intro-screen {
+    min-height: calc(100vh - 90px);
+    padding: 18px;
+    align-items: flex-start;
+  }
+
+  .intro-card h1 {
+    font-size: 36px;
+  }
+
+  .intro-subtitle {
+    font-size: 18px;
+  }
+
+  .stage-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .rules-card ul {
+    font-size: 16px;
+  }
+
+  .start-game-button {
+    font-size: 20px;
+  }
+}
+
   </style>
 </head>
 <body>
 
   <a class="back-link" href="../index.html">← Back to Arcade</a>
 
-  <main class="intro-screen">
-    <section class="intro-card">
+  <section class="intro-screen" id="introScreen">
+    <div class="intro-card">
       <h1>World Cup Addition</h1>
 
       <p class="intro-subtitle">
@@ -215,9 +828,532 @@
         </ul>
       </div>
 
-      <a class="start-game-button" href="game.html">Start Game</a>
-    </section>
-  </main>
+      <button class="start-game-button" type="button" id="startGameButton">Start Game</button>
+    </div>
+  </section>
 
+
+
+  <div class="page-layout" id="gamePage" style="display: none;">
+
+    <main class="game-screen">
+      <h1>World Cup Addition</h1>
+
+      <p class="instructions" id="instructions">
+        Add up the 2 numbers of these players' squad numbers.
+      </p>
+
+      <section class="players-area" id="playersArea">
+        <div class="player">
+          <div class="shirt" id="shirtOne">
+            <div class="shirt-name" id="nameOne">PLAYER</div>
+            <div class="shirt-number" id="numberOne">0</div>
+          </div>
+          <p id="countryOne">Player - Country</p>
+        </div>
+
+        <div class="plus">+</div>
+
+        <div class="player">
+          <div class="shirt" id="shirtTwo">
+            <div class="shirt-name" id="nameTwo">PLAYER</div>
+            <div class="shirt-number" id="numberTwo">0</div>
+          </div>
+          <p id="countryTwo">Player - Country</p>
+        </div>
+
+        <div class="plus plus-extra" id="plusThree">+</div>
+
+        <div class="player player-extra" id="playerThreeBox">
+          <div class="shirt" id="shirtThree">
+            <div class="shirt-name" id="nameThree">PLAYER</div>
+            <div class="shirt-number" id="numberThree">0</div>
+          </div>
+          <p id="countryThree">Player - Country</p>
+        </div>
+
+        <div class="plus plus-extra plus-four" id="plusFour">+</div>
+
+        <div class="player player-extra player-four" id="playerFourBox">
+          <div class="shirt" id="shirtFour">
+            <div class="shirt-name" id="nameFour">PLAYER</div>
+            <div class="shirt-number" id="numberFour">0</div>
+          </div>
+          <p id="countryFour">Player - Country</p>
+        </div>
+      </section>
+
+      <section class="answer-area">
+        <label for="answerInput">Enter your answer</label>
+
+        <span class="equals">=</span>
+
+        <input id="answerInput" type="number" />
+
+        <button id="checkButton">Check</button>
+
+        <div class="score-box">
+          <span>Score</span>
+          <strong id="score">0</strong>
+        </div>
+      </section>
+
+      <p id="message"></p>
+
+      <button id="nextButton">Next Question</button>
+    </main>
+
+    <aside class="goals-panel">
+      <h2>Chances</h2>
+
+      <div class="goal-life" id="goalOne">
+        🥅
+        <span class="cross">✕</span>
+      </div>
+
+      <div class="goal-life" id="goalTwo">
+        🥅
+        <span class="cross">✕</span>
+      </div>
+
+      <div class="goal-life" id="goalThree">
+        🥅
+        <span class="cross">✕</span>
+      </div>
+    </aside>
+
+  </div>
+
+  <section class="winner-screen" id="winnerScreen">
+    <div class="firework firework-one"></div>
+    <div class="firework firework-two"></div>
+    <div class="firework firework-three"></div>
+
+    <div class="winner-card">
+      <div class="trophy-picture" aria-label="World Cup trophy picture">
+        <div class="trophy-top"></div>
+        <div class="trophy-stem"></div>
+        <div class="trophy-base"></div>
+      </div>
+
+      <h2>World Cup Champion!</h2>
+      <p>You completed the 2-player, 3-player and 4-player challenges.</p>
+      <button id="playAgainButton">Play Again</button>
+    </div>
+  </section>
+
+
+  <script>
+document.addEventListener("DOMContentLoaded", function () {
+  const countryStyles = {
+    "Mexico": { colours: ["#006847", "#FFFFFF", "#CE1126"], textColour: "#111111" },
+    "South Africa": { colours: ["#007A4D", "#FFB612", "#DE3831"], textColour: "#111111" },
+    "South Korea": { colours: ["#FFFFFF", "#C60C30", "#003478"], textColour: "#111111" },
+    "Czechia": { colours: ["#FFFFFF", "#11457E", "#D7141A"], textColour: "#111111" },
+    "Canada": { colours: ["#FF0000", "#FFFFFF", "#FF0000"], textColour: "#111111" },
+    "Bosnia and Herzegovina": { colours: ["#002395", "#FECB00", "#002395"], textColour: "#FFFFFF" },
+    "Qatar": { colours: ["#8A1538", "#FFFFFF", "#8A1538"], textColour: "#FFFFFF" },
+    "Switzerland": { colours: ["#D52B1E", "#FFFFFF", "#D52B1E"], textColour: "#111111" },
+    "Brazil": { colours: ["#009C3B", "#FFDF00", "#009C3B"], textColour: "#111111" },
+    "Morocco": { colours: ["#C1272D", "#C1272D", "#006233"], textColour: "#FFFFFF" },
+    "Haiti": { colours: ["#00209F", "#D21034", "#FFFFFF"], textColour: "#FFFFFF" },
+    "Scotland": { colours: ["#005EB8", "#FFFFFF", "#005EB8"], textColour: "#FFFFFF" },
+    "United States": { colours: ["#3C3B6E", "#FFFFFF", "#B22234"], textColour: "#111111" },
+    "Paraguay": { colours: ["#D52B1E", "#FFFFFF", "#0038A8"], textColour: "#111111" },
+    "Australia": { colours: ["#FFCD00", "#FFCD00", "#00843D"], textColour: "#111111" },
+    "Turkey": { colours: ["#E30A17", "#FFFFFF", "#E30A17"], textColour: "#FFFFFF" },
+    "Germany": { colours: ["#000000", "#DD0000", "#FFCE00"], textColour: "#FFFFFF" },
+    "Curaçao": { colours: ["#002B7F", "#F9E814", "#002B7F"], textColour: "#FFFFFF" },
+    "Ivory Coast": { colours: ["#F77F00", "#FFFFFF", "#009E60"], textColour: "#111111" },
+    "Ecuador": { colours: ["#FCD116", "#003893", "#CE1126"], textColour: "#111111" },
+    "Netherlands": { colours: ["#FF6600", "#FF6600", "#FF6600"], textColour: "#FFFFFF" },
+    "Japan": { colours: ["#FFFFFF", "#BC002D", "#FFFFFF"], textColour: "#111111" },
+    "Sweden": { colours: ["#006AA7", "#FECC02", "#006AA7"], textColour: "#FFFFFF" },
+    "Tunisia": { colours: ["#E70013", "#FFFFFF", "#E70013"], textColour: "#FFFFFF" },
+    "Belgium": { colours: ["#000000", "#FAE042", "#ED2939"], textColour: "#FFFFFF" },
+    "Egypt": { colours: ["#CE1126", "#FFFFFF", "#000000"], textColour: "#111111" },
+    "Iran": { colours: ["#239F40", "#FFFFFF", "#DA0000"], textColour: "#111111" },
+    "New Zealand": { colours: ["#000000", "#FFFFFF", "#000000"], textColour: "#FFFFFF" },
+    "Spain": { colours: ["#AA151B", "#F1BF00", "#AA151B"], textColour: "#111111" },
+    "Cape Verde": { colours: ["#003893", "#FFFFFF", "#CF2027"], textColour: "#FFFFFF" },
+    "Saudi Arabia": { colours: ["#006C35", "#FFFFFF", "#006C35"], textColour: "#111111" },
+    "Uruguay": { colours: ["#75AADB", "#FFFFFF", "#75AADB"], textColour: "#111111" },
+    "France": { colours: ["#002395", "#FFFFFF", "#ED2939"], textColour: "#111111" },
+    "Senegal": { colours: ["#00853F", "#FDEF42", "#E31B23"], textColour: "#111111" },
+    "Iraq": { colours: ["#CE1126", "#FFFFFF", "#000000"], textColour: "#111111" },
+    "Norway": { colours: ["#BA0C2F", "#FFFFFF", "#00205B"], textColour: "#111111" },
+    "Argentina": { colours: ["#75AADB", "#FFFFFF", "#75AADB"], textColour: "#111111" },
+    "Algeria": { colours: ["#006233", "#FFFFFF", "#D21034"], textColour: "#111111" },
+    "Austria": { colours: ["#ED2939", "#FFFFFF", "#ED2939"], textColour: "#111111" },
+    "Jordan": { colours: ["#000000", "#FFFFFF", "#007A3D"], textColour: "#111111" },
+    "Portugal": { colours: ["#006600", "#FF0000", "#FF0000"], textColour: "#FFFFFF" },
+    "DR Congo": { colours: ["#007FFF", "#F7D618", "#CE1021"], textColour: "#111111" },
+    "Uzbekistan": { colours: ["#0099B5", "#FFFFFF", "#1EB53A"], textColour: "#111111" },
+    "Colombia": { colours: ["#FCD116", "#003893", "#CE1126"], textColour: "#111111" },
+    "England": { colours: ["#FFFFFF", "#FFFFFF", "#C8102E"], textColour: "#111111" },
+    "Croatia": { colours: ["#FFFFFF", "#FF0000", "#FFFFFF"], textColour: "#111111" },
+    "Ghana": { colours: ["#CE1126", "#FCD116", "#006B3F"], textColour: "#111111" },
+    "Panama": { colours: ["#FFFFFF", "#005293", "#D21034"], textColour: "#111111" }
+  };
+
+  const squads = {
+    "Mexico": [["Guillermo Ochoa", 13], ["Edson Álvarez", 4], ["Hirving Lozano", 22], ["Raúl Jiménez", 9], ["Santiago Giménez", 11]],
+    "South Africa": [["Ronwen Williams", 1], ["Percy Tau", 10], ["Teboho Mokoena", 4], ["Lyle Foster", 9], ["Themba Zwane", 11]],
+    "South Korea": [["Son Heung-min", 7], ["Kim Min-jae", 4], ["Lee Kang-in", 18], ["Hwang Hee-chan", 11], ["Cho Gue-sung", 9]],
+    "Czechia": [["Tomáš Souček", 22], ["Patrik Schick", 10], ["Adam Hložek", 9], ["Vladimír Coufal", 5], ["Antonín Barák", 7]],
+    "Canada": [["Alphonso Davies", 19], ["Jonathan David", 20], ["Stephen Eustáquio", 7], ["Tajon Buchanan", 11], ["Cyle Larin", 9]],
+    "Bosnia and Herzegovina": [["Edin Džeko", 11], ["Miralem Pjanić", 10], ["Sead Kolašinac", 5], ["Amar Dedić", 21], ["Ermedin Demirović", 23]],
+    "Qatar": [["Akram Afif", 11], ["Almoez Ali", 19], ["Hassan Al-Haydos", 10], ["Pedro Miguel", 2], ["Boualem Khoukhi", 16]],
+    "Switzerland": [["Granit Xhaka", 10], ["Manuel Akanji", 5], ["Yann Sommer", 1], ["Xherdan Shaqiri", 23], ["Breel Embolo", 7]],
+    "Brazil": [["Vinícius Júnior", 7], ["Rodrygo", 11], ["Marquinhos", 4], ["Alisson", 1], ["Bruno Guimarães", 5]],
+    "Morocco": [["Achraf Hakimi", 2], ["Hakim Ziyech", 7], ["Yassine Bounou", 1], ["Sofyan Amrabat", 4], ["Youssef En-Nesyri", 19]],
+    "Haiti": [["Duckens Nazon", 9], ["Frantzdy Pierrot", 20], ["Fafà Picault", 10], ["Johny Placide", 1], ["Danley Jean Jacques", 17]],
+    "Scotland": [["Andrew Robertson", 3], ["Scott McTominay", 4], ["John McGinn", 7], ["Kieran Tierney", 6], ["Billy Gilmour", 14]],
+    "United States": [["Christian Pulisic", 10], ["Weston McKennie", 8], ["Tyler Adams", 4], ["Gio Reyna", 7], ["Antonee Robinson", 5]],
+    "Paraguay": [["Miguel Almirón", 10], ["Julio Enciso", 19], ["Gustavo Gómez", 15], ["Ramón Sosa", 11], ["Mathías Villasanti", 23]],
+    "Australia": [["Mathew Ryan", 1], ["Jackson Irvine", 22], ["Craig Goodwin", 23], ["Harry Souttar", 19], ["Nestory Irankunda", 17]],
+    "Turkey": [["Hakan Çalhanoğlu", 10], ["Arda Güler", 8], ["Kenan Yıldız", 19], ["Merih Demiral", 3], ["Uğurcan Çakır", 23]],
+    "Germany": [["Jamal Musiala", 10], ["Florian Wirtz", 17], ["Joshua Kimmich", 6], ["Antonio Rüdiger", 2], ["Kai Havertz", 7]],
+    "Curaçao": [["Leandro Bacuna", 10], ["Juninho Bacuna", 7], ["Eloy Room", 1], ["Cuco Martina", 2], ["Rangelo Janga", 9]],
+    "Ivory Coast": [["Sébastien Haller", 22], ["Franck Kessié", 8], ["Simon Adingra", 24], ["Oumar Diakité", 11], ["Willy Boly", 12]],
+    "Ecuador": [["Moisés Caicedo", 23], ["Piero Hincapié", 3], ["Enner Valencia", 13], ["Pervis Estupiñán", 7], ["Kendry Páez", 10]],
+    "Netherlands": [["Virgil van Dijk", 4], ["Frenkie de Jong", 21], ["Cody Gakpo", 11], ["Xavi Simons", 7], ["Matthijs de Ligt", 3]],
+    "Japan": [["Kaoru Mitoma", 7], ["Takefusa Kubo", 20], ["Wataru Endo", 6], ["Daichi Kamada", 15], ["Ritsu Doan", 10]],
+    "Sweden": [["Alexander Isak", 9], ["Dejan Kulusevski", 21], ["Viktor Gyökeres", 17], ["Emil Forsberg", 10], ["Victor Lindelöf", 3]],
+    "Tunisia": [["Ellyes Skhiri", 17], ["Wahbi Khazri", 10], ["Hannibal Mejbri", 8], ["Aïssa Laïdouni", 14], ["Montassar Talbi", 3]],
+    "Belgium": [["Kevin De Bruyne", 7], ["Romelu Lukaku", 10], ["Thibaut Courtois", 1], ["Jérémy Doku", 11], ["Youri Tielemans", 8]],
+    "Egypt": [["Mohamed Salah", 10], ["Omar Marmoush", 7], ["Trézéguet", 21], ["Mohamed Elneny", 17], ["Mostafa Mohamed", 11]],
+    "Iran": [["Mehdi Taremi", 9], ["Sardar Azmoun", 20], ["Alireza Jahanbakhsh", 7], ["Saman Ghoddos", 14], ["Hossein Kanani", 13]],
+    "New Zealand": [["Chris Wood", 9], ["Liberato Cacace", 13], ["Joe Bell", 6], ["Sarpreet Singh", 10], ["Michael Boxall", 5]],
+    "Spain": [["Rodri", 16], ["Lamine Yamal", 19], ["Pedri", 8], ["Nico Williams", 17], ["Dani Olmo", 10]],
+    "Cape Verde": [["Ryan Mendes", 20], ["Garry Rodrigues", 11], ["Jovane Cabral", 7], ["Bebé", 21], ["Logan Costa", 5]],
+    "Saudi Arabia": [["Salem Al-Dawsari", 10], ["Firas Al-Buraikan", 9], ["Mohamed Kanno", 23], ["Hassan Tambakti", 17], ["Mohammed Al-Owais", 21]],
+    "Uruguay": [["Federico Valverde", 15], ["Darwin Núñez", 9], ["Ronald Araújo", 4], ["Luis Suárez", 9], ["José María Giménez", 2]],
+    "France": [["Kylian Mbappé", 10], ["Antoine Griezmann", 7], ["Aurélien Tchouaméni", 8], ["William Saliba", 17], ["Mike Maignan", 16]],
+    "Senegal": [["Sadio Mané", 10], ["Kalidou Koulibaly", 3], ["Édouard Mendy", 16], ["Ismaïla Sarr", 18], ["Nicolas Jackson", 7]],
+    "Iraq": [["Aymen Hussein", 18], ["Ali Jasim", 17], ["Zidane Iqbal", 14], ["Mohanad Ali", 10], ["Hussein Ali", 3]],
+    "Norway": [["Erling Haaland", 9], ["Martin Ødegaard", 10], ["Alexander Sørloth", 7], ["Oscar Bobb", 22], ["Sander Berge", 8]],
+    "Argentina": [["Lionel Messi", 10], ["Julián Álvarez", 9], ["Lautaro Martínez", 22], ["Alexis Mac Allister", 20], ["Emiliano Martínez", 23]],
+    "Algeria": [["Riyad Mahrez", 7], ["Ismaël Bennacer", 22], ["Ramy Bensebaini", 21], ["Houssem Aouar", 8], ["Youcef Belaïli", 10]],
+    "Austria": [["David Alaba", 8], ["Marcel Sabitzer", 9], ["Marko Arnautović", 7], ["Konrad Laimer", 20], ["Christoph Baumgartner", 19]],
+    "Jordan": [["Musa Al-Taamari", 10], ["Yazan Al-Naimat", 11], ["Ali Olwan", 9], ["Noor Al-Rawabdeh", 8], ["Abdallah Nasib", 3]],
+    "Portugal": [["Cristiano Ronaldo", 7], ["Bruno Fernandes", 8], ["Bernardo Silva", 10], ["Rúben Dias", 4], ["João Cancelo", 20]],
+    "DR Congo": [["Chancel Mbemba", 22], ["Cédric Bakambu", 17], ["Yoane Wissa", 20], ["Arthur Masuaku", 3], ["Silas Katompa Mvumpa", 11]],
+    "Uzbekistan": [["Eldor Shomurodov", 14], ["Abbosbek Fayzullaev", 22], ["Abdukodir Khusanov", 2], ["Oston Urunov", 11], ["Odiljon Hamrobekov", 9]],
+    "Colombia": [["Luis Díaz", 7], ["James Rodríguez", 10], ["Jhon Durán", 9], ["Daniel Muñoz", 21], ["Davinson Sánchez", 23]],
+    "England": [["Harry Kane", 9], ["Jude Bellingham", 10], ["Bukayo Saka", 7], ["Phil Foden", 11], ["Declan Rice", 4]],
+    "Croatia": [["Luka Modrić", 10], ["Joško Gvardiol", 4], ["Mateo Kovačić", 8], ["Andrej Kramarić", 9], ["Marcelo Brozović", 11]],
+    "Ghana": [["Mohammed Kudus", 20], ["Thomas Partey", 5], ["Iñaki Williams", 19], ["Jordan Ayew", 9], ["Antoine Semenyo", 11]],
+    "Panama": [["Adalberto Carrasquilla", 8], ["Michael Murillo", 23], ["José Fajardo", 17], ["Aníbal Godoy", 20], ["Édgar Bárcenas", 10]]
+  };
+
+  const players = [];
+
+  for (const country in squads) {
+    const style = countryStyles[country];
+
+    squads[country].forEach(function (player) {
+      const fullName = player[0];
+      const number = player[1];
+
+      players.push({
+        name: makeShirtName(fullName),
+        fullName: fullName,
+        country: country,
+        number: number,
+        colours: style.colours,
+        textColour: style.textColour
+      });
+    });
+  }
+
+  let correctAnswer = 0;
+  let score = 0;
+  let incorrectAnswers = 0;
+  let numberOfPlayers = 2;
+
+  const playersArea = document.getElementById("playersArea");
+  const instructions = document.getElementById("instructions");
+
+  const shirtOne = document.getElementById("shirtOne");
+  const shirtTwo = document.getElementById("shirtTwo");
+  const shirtThree = document.getElementById("shirtThree");
+  const shirtFour = document.getElementById("shirtFour");
+
+  const nameOne = document.getElementById("nameOne");
+  const nameTwo = document.getElementById("nameTwo");
+  const nameThree = document.getElementById("nameThree");
+  const nameFour = document.getElementById("nameFour");
+
+  const numberOne = document.getElementById("numberOne");
+  const numberTwo = document.getElementById("numberTwo");
+  const numberThree = document.getElementById("numberThree");
+  const numberFour = document.getElementById("numberFour");
+
+  const countryOne = document.getElementById("countryOne");
+  const countryTwo = document.getElementById("countryTwo");
+  const countryThree = document.getElementById("countryThree");
+  const countryFour = document.getElementById("countryFour");
+
+  const answerInput = document.getElementById("answerInput");
+  const checkButton = document.getElementById("checkButton");
+  const nextButton = document.getElementById("nextButton");
+  const message = document.getElementById("message");
+  const scoreDisplay = document.getElementById("score");
+  const goalLives = document.querySelectorAll(".goal-life");
+  const winnerScreen = document.getElementById("winnerScreen");
+  const playAgainButton = document.getElementById("playAgainButton");
+
+  function makeShirtName(fullName) {
+    const namePartsToRemove = ["Jr", "Jr.", "II", "III", "IV"];
+    let parts = fullName.replace(/\(.*?\)/g, "").trim().split(" ");
+
+    while (parts.length > 1 && namePartsToRemove.includes(parts[parts.length - 1])) {
+      parts.pop();
+    }
+
+    let shirtName = parts[parts.length - 1];
+
+    if (shirtName.length < 4 && parts.length > 1) {
+      shirtName = parts.slice(-2).join(" ");
+    }
+
+    return shirtName.toUpperCase().slice(0, 13);
+  }
+
+  function setShirt(shirt, player) {
+    shirt.style.setProperty("--colour1", player.colours[0]);
+    shirt.style.setProperty("--colour2", player.colours[1]);
+    shirt.style.setProperty("--colour3", player.colours[2]);
+    shirt.style.setProperty("--textColour", player.textColour);
+  }
+
+  function updateGoals() {
+    goalLives.forEach(function (goal, index) {
+      if (index < incorrectAnswers) {
+        goal.classList.add("crossed");
+      } else {
+        goal.classList.remove("crossed");
+      }
+    });
+  }
+
+  function getLevelFromScore() {
+    if (score >= 30) {
+      return 4;
+    }
+
+    if (score >= 20) {
+      return 3;
+    }
+
+    return 2;
+  }
+
+  function updateLevelDisplay() {
+    numberOfPlayers = getLevelFromScore();
+
+    playersArea.classList.remove("level-three");
+    playersArea.classList.remove("level-four");
+
+    if (numberOfPlayers === 4) {
+      playersArea.classList.add("level-four");
+      instructions.textContent = "Level 3: Add up the 4 numbers of these players' squad numbers.";
+    } else if (numberOfPlayers === 3) {
+      playersArea.classList.add("level-three");
+      instructions.textContent = "Level 2: Add up the 3 numbers of these players' squad numbers.";
+    } else {
+      instructions.textContent = "Add up the 2 numbers of these players' squad numbers.";
+    }
+  }
+
+  function getRandomPlayers(amount) {
+    const selectedPlayers = [];
+    const selectedIndexes = new Set();
+
+    while (selectedPlayers.length < amount) {
+      const randomIndex = Math.floor(Math.random() * players.length);
+
+      if (!selectedIndexes.has(randomIndex)) {
+        selectedIndexes.add(randomIndex);
+        selectedPlayers.push(players[randomIndex]);
+      }
+    }
+
+    return selectedPlayers;
+  }
+
+  function displayPlayer(player, nameElement, numberElement, countryElement, shirtElement) {
+    nameElement.textContent = player.name;
+    numberElement.textContent = player.number;
+    countryElement.textContent = player.fullName + " - " + player.country;
+    setShirt(shirtElement, player);
+  }
+
+  function newQuestion() {
+    updateLevelDisplay();
+
+    const combination = getRandomPlayers(numberOfPlayers);
+
+    correctAnswer = 0;
+
+    displayPlayer(combination[0], nameOne, numberOne, countryOne, shirtOne);
+    displayPlayer(combination[1], nameTwo, numberTwo, countryTwo, shirtTwo);
+
+    correctAnswer += combination[0].number;
+    correctAnswer += combination[1].number;
+
+    if (numberOfPlayers >= 3) {
+      displayPlayer(combination[2], nameThree, numberThree, countryThree, shirtThree);
+      correctAnswer += combination[2].number;
+    }
+
+    if (numberOfPlayers >= 4) {
+      displayPlayer(combination[3], nameFour, numberFour, countryFour, shirtFour);
+      correctAnswer += combination[3].number;
+    }
+
+    answerInput.value = "";
+    message.textContent = "";
+    message.className = "";
+
+    checkButton.style.display = "inline-block";
+    nextButton.style.display = "none";
+
+    answerInput.focus();
+  }
+
+  function resetGameAfterThreeMisses() {
+    score = 0;
+    scoreDisplay.textContent = score;
+
+    message.textContent = "Three missed chances! Your score has reset to 0.";
+    message.className = "incorrect";
+
+    checkButton.style.display = "none";
+    nextButton.style.display = "none";
+
+    setTimeout(function () {
+      incorrectAnswers = 0;
+      updateGoals();
+      newQuestion();
+    }, 1400);
+  }
+
+  function showWinnerScreen() {
+    message.textContent = "You completed the challenge!";
+    message.className = "correct";
+
+    checkButton.style.display = "none";
+    nextButton.style.display = "none";
+
+    winnerScreen.classList.add("show");
+  }
+
+  function checkAnswer() {
+    const studentAnswer = Number(answerInput.value);
+
+    if (answerInput.value === "") {
+      message.textContent = "Type your answer first.";
+      message.className = "incorrect";
+      return;
+    }
+
+    if (studentAnswer === correctAnswer) {
+      score++;
+      scoreDisplay.textContent = score;
+
+      if (score === 20) {
+        message.textContent = "Correct! You reached 20. Level 2 unlocked: now add 3 players!";
+      } else if (score === 30) {
+        message.textContent = "Correct! Level 3 unlocked: now add 4 players!";
+      } else if (score >= 40) {
+        showWinnerScreen();
+        return;
+      } else if (score > 30) {
+        message.textContent = "Correct! Great 4-player addition!";
+      } else if (score > 20) {
+        message.textContent = "Correct! Great 3-player addition!";
+      } else {
+        message.textContent = "Correct! Great addition!";
+      }
+
+      message.className = "correct";
+
+      checkButton.style.display = "none";
+      nextButton.style.display = "inline-block";
+    } else {
+      incorrectAnswers++;
+      updateGoals();
+
+      if (incorrectAnswers >= 3) {
+        resetGameAfterThreeMisses();
+        return;
+      }
+
+      message.textContent = "Try again. You have used " + incorrectAnswers + " of your 3 chances.";
+      message.className = "incorrect";
+    }
+  }
+
+  function playAgain() {
+    score = 0;
+    incorrectAnswers = 0;
+    scoreDisplay.textContent = score;
+    winnerScreen.classList.remove("show");
+    updateGoals();
+    newQuestion();
+  }
+
+  checkButton.addEventListener("click", checkAnswer);
+  nextButton.addEventListener("click", newQuestion);
+  playAgainButton.addEventListener("click", playAgain);
+
+  answerInput.addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+      checkAnswer();
+    }
+  });
+
+  updateGoals();
+  newQuestion();
+
+  message.textContent = "Top 5 from each World Cup nation loaded: " + players.length + " players.";
+  message.className = "correct";
+
+  setTimeout(function () {
+    message.textContent = "";
+    message.className = "";
+  }, 2500);
+});
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+  const startGameButton = document.getElementById("startGameButton");
+  const introScreen = document.getElementById("introScreen");
+  const gamePage = document.getElementById("gamePage");
+  const answerInput = document.getElementById("answerInput");
+
+  if (startGameButton) {
+    startGameButton.addEventListener("click", function () {
+      if (introScreen) {
+        introScreen.style.display = "none";
+      }
+
+      if (gamePage) {
+        gamePage.style.display = "grid";
+      }
+
+      window.scrollTo(0, 0);
+
+      if (answerInput) {
+        answerInput.focus();
+      }
+    });
+  }
+});
+
+  </script>
 </body>
 </html>
