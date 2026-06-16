@@ -741,6 +741,7 @@ body {
   color: #00204d;
   border-radius: 14px;
   border: 3px solid white;
+  text-decoration: none;
   font-size: 25px;
   font-weight: bold;
   box-shadow: 0 7px 0 rgba(0, 0, 0, 0.28);
@@ -753,8 +754,20 @@ body {
   box-shadow: 0 5px 0 rgba(0, 0, 0, 0.28);
 }
 
+/* Hide the game until Start Game is clicked */
 #gamePage {
+  display: none;
   margin: 0 auto;
+}
+
+/* The Start Game link changes the address to #gamePage, then this reveals the game */
+#gamePage:target {
+  display: grid !important;
+}
+
+/* When the game is showing, hide the instructions */
+body:has(#gamePage:target) #introScreen {
+  display: none !important;
 }
 
 @media (max-width: 850px) {
@@ -828,13 +841,13 @@ body {
         </ul>
       </div>
 
-      <button class="start-game-button" type="button" id="startGameButton">Start Game</button>
+      <a class="start-game-button" id="startGameButton" href="#gamePage">Start Game</a>
     </div>
   </section>
 
 
 
-  <div class="page-layout" id="gamePage" style="display: none;">
+  <div class="page-layout" id="gamePage">
 
     <main class="game-screen">
       <h1>World Cup Addition</h1>
@@ -1345,11 +1358,13 @@ document.addEventListener("DOMContentLoaded", function () {
         gamePage.style.display = "grid";
       }
 
-      window.scrollTo(0, 0);
+      setTimeout(function () {
+        window.scrollTo(0, 0);
 
-      if (answerInput) {
-        answerInput.focus();
-      }
+        if (answerInput) {
+          answerInput.focus();
+        }
+      }, 50);
     });
   }
 });
