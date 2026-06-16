@@ -233,3 +233,15 @@ body {
     min-height: 250px;
   }
 }
+
+.punctuation-card {
+  background: linear-gradient(135deg, #ef476f, #ffd166);
+}
+
+.punctuation-card:hover {
+  background: linear-gradient(135deg, #ff5d8f, #ffe08a);
+}
+
+.punctuation-icon {
+  color: #ef476f;
+}
