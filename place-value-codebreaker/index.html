@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Place Value Codebreaker</title>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <a class="back-link" href="../index.html">← Back to Arcade</a>
+
+  <main class="game-screen">
+    <header class="game-header">
+      <h1>Place Value Codebreaker</h1>
+      <p>
+        Guess the secret number. Use the colour clues to crack the code.
+      </p>
+    </header>
+
+    <section class="level-picker">
+      <h2>Choose your place value level</h2>
+
+      <div class="level-buttons" id="levelButtons">
+        <button class="level-button" data-digits="3">3 digits</button>
+        <button class="level-button active" data-digits="4">4 digits</button>
+        <button class="level-button" data-digits="5">5 digits</button>
+        <button class="level-button" data-digits="6">6 digits</button>
+        <button class="level-button" data-digits="7">7 digits</button>
+      </div>
+    </section>
+
+    <section class="legend">
+      <div class="legend-item">
+        <span class="legend-box correct-place">5</span>
+        <p>Correct digit and correct place value column</p>
+      </div>
+
+      <div class="legend-item">
+        <span class="legend-box wrong-place">5</span>
+        <p>Digit is in the number, but in the wrong place value column</p>
+      </div>
+
+      <div class="legend-item">
+        <span class="legend-box not-in-number">5</span>
+        <p>Digit is not in the number</p>
+      </div>
+    </section>
+
+    <section class="guess-card">
+      <div class="place-value-labels" id="placeValueLabels"></div>
+
+      <div class="digit-inputs" id="digitInputs"></div>
+
+      <div class="buttons">
+        <button id="checkButton">Check Guess</button>
+        <button id="newGameButton" class="secondary-button">New Game</button>
+      </div>
+
+      <p id="message"></p>
+    </section>
+
+    <section class="game-info">
+      <p>Digits: <strong id="digitCount">4</strong></p>
+      <p>Guesses: <strong id="guessCount">0</strong> / <strong id="maxGuessCount">8</strong></p>
+      <p>Level: <strong id="levelName">Thousands</strong></p>
+    </section>
+
+    <section class="guess-history">
+      <h2>Your Guesses</h2>
+
+      <div class="history-header" id="historyHeader"></div>
+
+      <div id="historyList"></div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,200 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #123c69, #2a9d8f);
+  color: white;
+  min-height: 100vh;
+}
+
+.hero {
+  text-align: center;
+  padding: 55px 20px 35px;
+}
+
+.hero h1 {
+  font-size: 56px;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: #ffffff;
+  text-shadow: 4px 4px 0 #001f3f;
+}
+
+.hero p {
+  font-size: 24px;
+  margin-top: 15px;
+}
+
+.container {
+  width: 92%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-bottom: 50px;
+}
+
+.game-section {
+  margin-bottom: 45px;
+}
+
+.game-section h2 {
+  font-size: 34px;
+  margin-bottom: 20px;
+  border-left: 10px solid #ffd166;
+  padding-left: 15px;
+}
+
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 360px));
+  gap: 25px;
+}
+
+.game-card {
+  display: block;
+  text-decoration: none;
+  color: white;
+  border-radius: 24px;
+  padding: 30px;
+  min-height: 270px;
+  transition: transform 0.2s, background 0.2s;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28);
+  border: 3px solid rgba(255, 255, 255, 0.35);
+}
+
+.game-card:hover {
+  transform: translateY(-6px);
+}
+
+.game-card h3 {
+  font-size: 28px;
+  margin: 18px 0 10px;
+}
+
+.game-card p {
+  font-size: 18px;
+  line-height: 1.4;
+  margin-bottom: 20px;
+}
+
+.game-card span {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 11px 18px;
+  background: #001f3f;
+  border-radius: 12px;
+  font-weight: bold;
+}
+
+.numeracy {
+  background: linear-gradient(135deg, #006d77, #118ab2);
+}
+
+.numeracy:hover {
+  background: linear-gradient(135deg, #007c89, #1597c4);
+}
+
+.empty-message {
+  font-size: 20px;
+  background: rgba(255, 255, 255, 0.14);
+  border: 2px dashed rgba(255, 255, 255, 0.45);
+  border-radius: 18px;
+  padding: 24px;
+  max-width: 420px;
+}
+
+/* Soccer ball image made with CSS so it will not turn into a question mark */
+.soccer-ball {
+  width: 82px;
+  height: 82px;
+  margin: 0 auto 10px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 50%, #111 0 12px, transparent 13px),
+    radial-gradient(circle at 25% 22%, #111 0 9px, transparent 10px),
+    radial-gradient(circle at 75% 22%, #111 0 9px, transparent 10px),
+    radial-gradient(circle at 20% 70%, #111 0 9px, transparent 10px),
+    radial-gradient(circle at 80% 70%, #111 0 9px, transparent 10px),
+    #ffffff;
+  border: 4px solid #111;
+  position: relative;
+  box-shadow: inset -8px -10px 0 rgba(0, 0, 0, 0.18), 0 5px 12px rgba(0, 0, 0, 0.25);
+}
+
+.soccer-ball::before,
+.soccer-ball::after {
+  content: "";
+  position: absolute;
+  background: #111;
+  height: 4px;
+  width: 30px;
+  top: 39px;
+  left: 26px;
+}
+
+.soccer-ball::before {
+  transform: rotate(35deg);
+}
+
+.soccer-ball::after {
+  transform: rotate(-35deg);
+}
+
+
+.digit-icon {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin: 0 auto 12px;
+}
+
+.digit-icon span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 42px;
+  height: 54px;
+  background: white;
+  color: #001f3f;
+  border-radius: 10px;
+  font-size: 30px;
+  font-weight: bold;
+  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.25);
+}
+
+.place-value-card {
+  background: linear-gradient(135deg, #6a4c93, #1982c4);
+}
+
+.place-value-card:hover {
+  background: linear-gradient(135deg, #7b5ab0, #2296df);
+}
+
+@media (max-width: 700px) {
+  .hero {
+    padding-top: 40px;
+  }
+
+  .hero h1 {
+    font-size: 38px;
+  }
+
+  .hero p {
+    font-size: 19px;
+  }
+
+  .game-section h2 {
+    font-size: 28px;
+  }
+
+  .game-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .game-card {
+    min-height: 250px;
+  }
+}
