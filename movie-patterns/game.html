@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Movie Pattern Quest - Game</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;font-family:Arial,sans-serif;color:#fff8dc;background:linear-gradient(90deg,#4c0519 0 10%,#111827 10% 90%,#4c0519 90% 100%);padding:10px}
+a{color:inherit}
+.theatre{min-height:calc(100vh - 20px);display:grid;grid-template-rows:auto 1fr auto;gap:10px;max-width:1220px;margin:0 auto}
+.marquee{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;padding:10px 12px;border:4px solid #fbbf24;border-radius:18px;background:#fbbf24;color:#111827;box-shadow:0 8px 20px rgba(0,0,0,.35)}
+.marquee a{text-decoration:none;background:#111827;color:#fff8dc;padding:10px 12px;border-radius:10px;font-weight:bold}
+.marquee h1{margin:0;text-align:center;text-transform:uppercase;letter-spacing:2px;font-size:30px}
+.status{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.status-card{padding:8px;border:2px solid rgba(255,248,220,.45);border-radius:14px;background:rgba(0,0,0,.36);text-align:center}
+.status-card span{display:block;font-size:13px;opacity:.85}
+.status-card strong{display:block;font-size:26px;color:#fbbf24}
+.stage{display:grid;grid-template-columns:180px 1fr 240px;gap:10px;min-height:0}
+.poster-wall,.screen,.control-panel{border:4px solid rgba(251,191,36,.75);border-radius:20px;background:rgba(0,0,0,.35);padding:12px;min-height:0}
+.poster-wall{display:grid;grid-template-columns:1fr 1fr;gap:8px;align-content:start}
+.poster{min-height:58px;border:2px dashed rgba(255,248,220,.5);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:28px;filter:grayscale(1);opacity:.5;background:rgba(255,255,255,.08);transition:transform .45s ease, opacity .45s ease, filter .45s ease}
+.poster.unlocked{filter:grayscale(0);opacity:1;border-style:solid;border-color:#fbbf24;background:rgba(251,191,36,.18)}
+.poster.pop{animation:posterPop .9s ease}
+@keyframes posterPop{0%{transform:scale(.8) rotate(-5deg)}45%{transform:scale(1.25) rotate(5deg)}100%{transform:scale(1) rotate(0)}}
+.screen{display:grid;grid-template-rows:auto auto auto auto 1fr auto;gap:7px;text-align:center;background:radial-gradient(circle at 50% 20%,rgba(255,255,255,.12),transparent 28%),#1f2937}
+.badge{justify-self:center;padding:7px 14px;border-radius:999px;background:#fff8dc;color:#6d28d9;font-weight:bold}
+.movie-title{font-size:28px;font-weight:bold;color:#fbbf24;text-shadow:2px 2px 0 #000}
+.scene-emoji{font-size:54px;line-height:1;transition:transform .35s ease}
+.scene-emoji.correct-animate{animation:bounceSpin 1s ease}
+.scene-emoji.wrong-animate{animation:shake .7s ease}
+@keyframes bounceSpin{0%{transform:scale(1) rotate(0)}35%{transform:scale(1.3) rotate(-8deg)}70%{transform:scale(1.12) rotate(8deg)}100%{transform:scale(1) rotate(0)}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+.story{margin:0 auto;max-width:720px;font-size:17px;line-height:1.25}
+.question-text{margin:0 auto;max-width:760px;padding:8px 10px;border-radius:14px;background:rgba(251,191,36,.16);border:2px solid rgba(251,191,36,.55);font-size:20px;font-weight:bold;color:#fff8dc}
+.pattern-box{align-self:center;margin:0 auto;width:100%;padding:14px;border:4px solid #fbbf24;border-radius:18px;background:#fff8dc;color:#111827;box-shadow:inset 0 -6px 0 rgba(0,0,0,.12)}
+.pattern-row{display:flex;justify-content:center;align-items:center;gap:8px;flex-wrap:wrap}
+.tile{min-width:72px;min-height:58px;padding:6px 10px;border:3px solid #0284c7;border-radius:14px;background:#e0f2fe;color:#0f172a;display:flex;align-items:center;justify-content:center;gap:4px;font-size:30px;font-weight:bold}
+.tile small{font-size:20px}
+.tile.missing{background:#fef3c7;border-color:#f59e0b;color:#92400e;animation:glow 1.4s infinite}
+@keyframes glow{0%,100%{box-shadow:0 0 0 rgba(245,158,11,0)}50%{box-shadow:0 0 18px rgba(245,158,11,.8)}}
+.clue{margin:10px 0 0;font-size:16px;font-weight:bold;color:#334155}
+.control-panel{display:grid;gap:10px;align-content:start}
+.ticket{padding:10px;border-radius:16px;background:#fff8dc;color:#111827;border:3px dashed #7f1d1d;text-align:center}
+.ticket h2{margin:0 0 8px;font-size:22px}
+.ticket p{margin:4px 0;font-size:15px;font-weight:bold}
+.answer-area{display:grid;gap:8px}
+.answer-area label{font-size:18px;font-weight:bold;text-align:center}
+#answerInput{width:100%;min-height:58px;border:3px solid #fbbf24;border-radius:14px;text-align:center;font-size:32px;font-weight:bold;color:#111827;background:white}
+button{min-height:48px;border:none;border-radius:14px;background:#fbbf24;color:#111827;font-size:19px;font-weight:bold;cursor:pointer}
+button:hover{background:#fde68a}
+button:disabled{opacity:.55;cursor:not-allowed}
+.feedback{min-height:64px;padding:8px;border-radius:14px;background:rgba(255,255,255,.08);font-size:17px;font-weight:bold;text-align:center}
+.correct{color:#bbf7d0}
+.wrong{color:#fecaca}
+.rule{display:none;padding:10px;border-radius:14px;background:rgba(255,255,255,.12);font-size:16px;text-align:center}
+.rule strong{color:#fbbf24;font-size:22px}
+.seats{display:grid;grid-template-columns:repeat(12,1fr);gap:6px;padding:8px 10px;border:3px solid rgba(251,191,36,.75);border-radius:18px;background:rgba(0,0,0,.35)}
+.seat{height:22px;border-radius:8px 8px 3px 3px;background:#7f1d1d;border:1px solid rgba(255,248,220,.35)}
+@media(max-width:950px){.stage{grid-template-columns:1fr}.poster-wall{grid-template-columns:repeat(6,1fr)}.control-panel{grid-template-columns:1fr}.status{grid-template-columns:repeat(2,1fr)}.marquee{grid-template-columns:1fr}.marquee h1{font-size:24px}.seats{grid-template-columns:repeat(6,1fr)}}
+@media(max-height:700px) and (min-width:951px){.scene-emoji{font-size:38px}.story{font-size:15px}.question-text{font-size:17px;padding:6px}.tile{min-height:46px;font-size:23px}.movie-title{font-size:22px}.status-card strong{font-size:21px}.feedback{min-height:48px;font-size:15px}}
+</style>
+</head>
+<body>
+<main class="theatre">
+  <header class="marquee">
+    <a href="index.html">← Ticket Booth</a>
+    <h1>Now Showing: Movie Pattern Quest</h1>
+    <div class="status-card"><span>Type</span><strong id="typeLabel">Mixed</strong></div>
+  </header>
+
+  <section class="status">
+    <div class="status-card"><span>Score</span><strong id="score">0</strong></div>
+    <div class="status-card"><span>Scene</span><strong><span id="questionNumber">1</span>/<span id="totalQuestions">12</span></strong></div>
+    <div class="status-card"><span>Streak</span><strong id="streak">0</strong></div>
+    <div class="status-card"><span>Unlocked</span><strong id="unlockedCount">0</strong></div>
+    <div class="status-card"><span>Difficulty</span><strong id="difficultyLabel">Easy</strong></div>
+  </section>
+
+  <section class="stage">
+    <aside class="poster-wall" id="posterWall" aria-label="Movie scenes"></aside>
+
+    <section class="screen">
+      <div class="badge" id="sceneBadge">Scene 1</div>
+      <div class="movie-title" id="movieTitle">Movie</div>
+      <div class="scene-emoji" id="sceneEmoji">🎬</div>
+      <p class="story" id="storyText">Solve the pattern.</p>
+      <p class="question-text" id="questionText">How many objects are in the pattern?</p>
+
+      <div class="pattern-box">
+        <div class="pattern-row" id="patternRow"></div>
+        <p class="clue" id="clueText">Look for what changes each time.</p>
+      </div>
+    </section>
+
+    <aside class="control-panel">
+      <div class="ticket">
+        <h2>Answer Ticket</h2>
+        <p>Type your answer, then press Check.</p>
+        <p>The next scene will load automatically.</p>
+      </div>
+
+      <div class="answer-area">
+        <label for="answerInput">Answer</label>
+        <input id="answerInput" type="number" autocomplete="off" />
+        <button id="checkButton" type="button">Check Answer</button>
+        <button id="newGameButton" type="button">Restart Movie</button>
+      </div>
+
+      <div class="feedback" id="feedbackMessage"></div>
+
+      <div class="rule" id="answerPanel">
+        Correct answer: <strong id="correctAnswerText"></strong>
+        <div id="ruleText"></div>
+      </div>
+    </aside>
+  </section>
+
+  <footer class="seats" aria-label="Movie theatre seats">
+    <div class="seat"></div><div class="seat"></div><div class="seat"></div><div class="seat"></div><div class="seat"></div><div class="seat"></div>
+    <div class="seat"></div><div class="seat"></div><div class="seat"></div><div class="seat"></div><div class="seat"></div><div class="seat"></div>
+  </footer>
+</main>
+
+<script>
+document.addEventListener("DOMContentLoaded",function(){
+const params=new URLSearchParams(window.location.search);
+const startingDifficulty=params.get("difficulty")||"easy";
+const startingMode=params.get("mode")||"mixed";
+const totalQuestions=12;
+const scenes=[
+{movie:"Toy Story",emoji:"🧸",thing:"Andy’s toys",unit:"toys",story:"Andy’s toys are lining up on the shelf in a secret number pattern."},
+{movie:"Finding Nemo",emoji:"🐠",thing:"Nemo’s fish friends",unit:"fish",story:"Nemo swims past groups of fish in the reef."},
+{movie:"Frozen",emoji:"❄️",thing:"Elsa’s snowflakes",unit:"snowflakes",story:"Elsa’s magic creates snowflakes across the ice."},
+{movie:"The Lion King",emoji:"🦁",thing:"Simba’s pawprints",unit:"pawprints",story:"Simba follows pawprints across the Pride Lands."},
+{movie:"Moana",emoji:"🌊",thing:"Moana’s waves",unit:"waves",story:"Moana watches waves roll towards her boat."},
+{movie:"Shrek",emoji:"🟢",thing:"Shrek’s swamp stones",unit:"swamp stones",story:"Shrek crosses stepping stones through the swamp."},
+{movie:"The Incredibles",emoji:"🦸",thing:"superhero jumps",unit:"jumps",story:"The superhero family leaps across the city rooftops."},
+{movie:"Cars",emoji:"🏎️",thing:"Lightning McQueen’s laps",unit:"laps",story:"Lightning McQueen counts laps around the race track."},
+{movie:"Monsters, Inc.",emoji:"🚪",thing:"monster doors",unit:"doors",story:"The scare floor doors are numbered in a pattern."},
+{movie:"Up",emoji:"🎈",thing:"Carl’s balloons",unit:"balloons",story:"Carl’s balloons lift the house in colourful groups."},
+{movie:"Inside Out",emoji:"🟡",thing:"memory orbs",unit:"memory orbs",story:"Memory orbs roll past inside Riley’s mind."},
+{movie:"Encanto",emoji:"🕯️",thing:"magical candles",unit:"candles",story:"The magical rooms glow with candles in a pattern."}
+];
+const scoreDisplay=document.getElementById("score"),questionNumberDisplay=document.getElementById("questionNumber"),totalQuestionsDisplay=document.getElementById("totalQuestions"),streakDisplay=document.getElementById("streak"),unlockedCountDisplay=document.getElementById("unlockedCount"),difficultyLabel=document.getElementById("difficultyLabel"),typeLabel=document.getElementById("typeLabel"),posterWall=document.getElementById("posterWall"),sceneBadge=document.getElementById("sceneBadge"),movieTitle=document.getElementById("movieTitle"),sceneEmoji=document.getElementById("sceneEmoji"),storyText=document.getElementById("storyText"),questionText=document.getElementById("questionText"),patternRow=document.getElementById("patternRow"),clueText=document.getElementById("clueText"),answerInput=document.getElementById("answerInput"),checkButton=document.getElementById("checkButton"),newGameButton=document.getElementById("newGameButton"),feedbackMessage=document.getElementById("feedbackMessage"),answerPanel=document.getElementById("answerPanel"),correctAnswerText=document.getElementById("correctAnswerText"),ruleText=document.getElementById("ruleText");
+let score=0,streak=0,questionNumber=1,unlocked=0,answered=false,currentPattern=null,moveTimer=null;
+totalQuestionsDisplay.textContent=totalQuestions;
+difficultyLabel.textContent=startingDifficulty.charAt(0).toUpperCase()+startingDifficulty.slice(1);
+typeLabel.textContent=startingMode==="next"?"Next":startingMode==="missing"?"Missing":"Mixed";
+function randomInt(min,max){return Math.floor(Math.random()*(max-min+1))+min}
+function qMode(){return startingMode==="mixed"?(Math.random()<.5?"next":"missing"):startingMode}
+function arithmetic(mode){let diff=startingDifficulty,step;if(diff==="easy")step=randomInt(2,10);else if(diff==="medium")step=randomInt(4,15);else{step=randomInt(-12,18);if(step===0)step=6}let start=step>0?randomInt(1,20):randomInt(35,80),seq=[];for(let i=0;i<6;i++)seq.push(start+step*i);let rule=step>0?"Rule: add "+step+" each time.":"Rule: subtract "+Math.abs(step)+" each time.";if(mode==="next")return{mode:"next",sequence:seq.slice(0,5).concat(["?"]),answer:seq[5],rule,clue:"Look for the same amount being added or subtracted."};let mi=randomInt(1,4),display=seq.slice(),ans=display[mi];display[mi]="?";return{mode:"missing",sequence:display,answer:ans,rule,clue:"Find the missing number in the middle of the pattern."}}
+function growing(mode){let diff=startingDifficulty,start=randomInt(1,diff==="hard"?10:6),first=randomInt(1,diff==="hard"?8:5),inc=diff==="medium"?randomInt(1,3):randomInt(2,5),seq=[start],add=first;for(let i=1;i<6;i++){seq.push(seq[i-1]+add);add+=inc}if(mode==="next")return{mode:"next",sequence:seq.slice(0,5).concat(["?"]),answer:seq[5],rule:"Rule: add "+first+", then increase the add-on by "+inc+" each time.",clue:"The jump between numbers is growing."};let mi=randomInt(2,4),display=seq.slice(),ans=display[mi];display[mi]="?";return{mode:"missing",sequence:display,answer:ans,rule:"Rule: the amount added grows by "+inc+" each time.",clue:"Look at the jumps between each number."}}
+function multiply(mode){let factor=startingDifficulty==="hard"?randomInt(2,4):2,start=randomInt(1,startingDifficulty==="hard"?5:8),seq=[start];for(let i=1;i<6;i++)seq.push(seq[i-1]*factor);if(mode==="next")return{mode:"next",sequence:seq.slice(0,5).concat(["?"]),answer:seq[5],rule:"Rule: multiply by "+factor+" each time.",clue:"The numbers grow by multiplying."};let mi=randomInt(1,4),display=seq.slice(),ans=display[mi];display[mi]="?";return{mode:"missing",sequence:display,answer:ans,rule:"Rule: multiply by "+factor+" each time.",clue:"Each number is multiplied by the same number."}}
+function generate(){let mode=qMode();if(startingDifficulty==="easy")return arithmetic(mode);if(startingDifficulty==="medium")return Math.random()<.65?growing(mode):arithmetic(mode);let t=randomInt(1,3);return t===1?arithmetic(mode):t===2?growing(mode):multiply(mode)}
+function buildPosters(popIndex){posterWall.innerHTML="";for(let i=0;i<totalQuestions;i++){let p=document.createElement("div");p.className="poster";p.textContent=scenes[i].emoji;p.title=scenes[i].movie;if(i<unlocked)p.classList.add("unlocked");if(i===popIndex)p.classList.add("pop");posterWall.appendChild(p)}}
+function updateQuestionText(scene){if(currentPattern.mode==="next"){questionText.textContent="How many "+scene.unit+" come next in the "+scene.movie+" pattern?"}else{questionText.textContent="How many "+scene.unit+" are missing from the "+scene.movie+" pattern?"}}
+function load(){clearTimeout(moveTimer);answered=false;checkButton.disabled=false;answerInput.disabled=false;currentPattern=generate();let sc=scenes[questionNumber-1];questionNumberDisplay.textContent=questionNumber;scoreDisplay.textContent=score;streakDisplay.textContent=streak;unlockedCountDisplay.textContent=unlocked;sceneBadge.textContent="Scene "+questionNumber;movieTitle.textContent=sc.movie;sceneEmoji.textContent=sc.emoji;sceneEmoji.className="scene-emoji";storyText.textContent=sc.story;updateQuestionText(sc);clueText.textContent=currentPattern.clue;feedbackMessage.textContent="";feedbackMessage.className="feedback";answerPanel.style.display="none";correctAnswerText.textContent="";ruleText.textContent="";answerInput.value="";patternRow.innerHTML="";currentPattern.sequence.forEach(item=>{let tile=document.createElement("div");tile.className="tile";if(item==="?"){tile.classList.add("missing");tile.textContent="?"}else{tile.innerHTML="<span>"+item+"</span><small>"+sc.emoji+"</small>"}patternRow.appendChild(tile)});buildPosters();setTimeout(()=>answerInput.focus(),100)}
+function finishGame(){sceneBadge.textContent="Final Score";movieTitle.textContent="Movie Quest Complete";sceneEmoji.textContent="🏆";storyText.textContent="Premiere complete! You solved "+score+" out of "+totalQuestions+" movie patterns.";questionText.textContent="Choose Ticket Booth to change game type, or Restart Movie to play again.";patternRow.innerHTML="";clueText.textContent="";feedbackMessage.textContent="";answerPanel.style.display="none";answerInput.value="";answerInput.disabled=true;checkButton.disabled=true}
+function autoNext(){moveTimer=setTimeout(function(){if(questionNumber>=totalQuestions){finishGame()}else{questionNumber++;load()}},1500)}
+function check(){if(answered)return;if(answerInput.value.trim()===""){feedbackMessage.textContent="Type your answer first.";feedbackMessage.className="feedback wrong";return}answered=true;answerInput.disabled=true;checkButton.disabled=true;let sc=scenes[questionNumber-1];if(Number(answerInput.value)===currentPattern.answer){score++;streak++;unlocked++;feedbackMessage.textContent="Correct! "+currentPattern.answer+" "+sc.unit+" unlocks the "+sc.movie+" scene.";feedbackMessage.className="feedback correct";sceneEmoji.classList.add("correct-animate");buildPosters(unlocked-1)}else{streak=0;feedbackMessage.textContent="Not quite. The answer was "+currentPattern.answer+" "+sc.unit+". Moving to the next scene...";feedbackMessage.className="feedback wrong";sceneEmoji.classList.add("wrong-animate");buildPosters()}scoreDisplay.textContent=score;streakDisplay.textContent=streak;unlockedCountDisplay.textContent=unlocked;correctAnswerText.textContent=currentPattern.answer;ruleText.textContent=currentPattern.rule;answerPanel.style.display="block";autoNext()}
+function restart(){score=0;streak=0;questionNumber=1;unlocked=0;load()}
+checkButton.addEventListener("click",check);answerInput.addEventListener("keydown",e=>{if(e.key==="Enter")check()});newGameButton.addEventListener("click",restart);restart();
+});
+</script>
+</body>
+</html>
