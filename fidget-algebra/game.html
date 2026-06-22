@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fidget Algebra Quest - Game</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;height:100%;font-family:Arial,sans-serif;color:white;background:linear-gradient(135deg,#0f172a,#0f766e 42%,#8b5cf6 72%,#f472b6);overflow:hidden}.game{height:100vh;max-width:1220px;margin:0 auto;padding:8px;display:grid;grid-template-rows:auto 1fr;gap:8px}.top{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center;padding:8px;border:3px solid rgba(255,255,255,.55);border-radius:18px;background:rgba(0,0,0,.28)}.top a{text-decoration:none;background:white;color:#0f766e;padding:8px 10px;border-radius:10px;font-weight:bold;font-size:14px}.top h1{margin:0;text-align:center;font-size:24px;text-transform:uppercase}.pill{background:white;color:#0f172a;border-radius:12px;padding:8px 10px;font-weight:bold;text-align:center;font-size:14px}.main{min-height:0;display:grid;grid-template-columns:minmax(0,1fr) 255px;gap:8px}.play,.collection{min-height:0;border:3px solid rgba(255,255,255,.45);border-radius:20px;background:rgba(0,0,0,.28);padding:9px}.play{display:grid;grid-template-rows:auto 1fr}.scorebar{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:8px}.score{padding:6px;border-radius:13px;background:rgba(255,255,255,.13);border:2px solid rgba(255,255,255,.24);text-align:center}.score span{display:block;font-size:11px;opacity:.9}.score strong{display:block;font-size:22px;color:#fff7ad}.card{min-height:0;text-align:center;border-radius:20px;background:rgba(255,255,255,.13);border:2px solid rgba(255,255,255,.28);padding:10px;display:grid;grid-template-rows:auto auto auto 1fr auto auto;gap:6px;align-items:center}.level-title{justify-self:center;padding:6px 12px;border-radius:999px;background:white;color:#0f766e;font-weight:bold;font-size:16px}.fidget-line{display:flex;justify-content:center;align-items:center;gap:8px;min-height:48px}.big{font-size:44px;animation:float 2.2s ease-in-out infinite}@keyframes float{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-6px) rotate(3deg)}}.prompt{font-size:18px;font-weight:bold;margin:0}.equation{align-self:center;justify-self:center;display:inline-block;padding:14px 24px;border-radius:20px;background:white;color:#0f172a;border:4px solid #fff7ad;font-size:48px;font-weight:bold;box-shadow:inset 0 -6px 0 rgba(0,0,0,.13)}.answer{display:flex;justify-content:center;align-items:center;gap:8px;flex-wrap:wrap}.answer label{font-size:18px;font-weight:bold}#answerInput{width:135px;min-height:48px;border:3px solid white;border-radius:14px;text-align:center;font-size:30px;font-weight:bold;color:#0f172a}button{min-height:46px;border:none;border-radius:14px;background:#fff7ad;color:#0f172a;padding:0 16px;font-size:18px;font-weight:bold;cursor:pointer;box-shadow:inset 0 -5px 0 rgba(0,0,0,.13)}button:disabled{opacity:.55}.feedback{min-height:34px;font-size:18px;font-weight:bold}.correct{color:#bbf7d0}.wrong{color:#fecaca}.rule{display:none;max-width:660px;margin:0 auto;padding:7px;border-radius:13px;background:rgba(255,255,255,.13);font-size:15px;font-weight:bold}.collection{display:grid;grid-template-rows:auto 1fr auto}.collection h2{margin:0 0 8px;text-align:center;color:#fff7ad;font-size:22px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;align-content:start}.item{min-height:46px;border-radius:13px;background:rgba(255,255,255,.12);border:2px solid rgba(255,255,255,.25);display:grid;place-items:center;font-size:25px;filter:grayscale(1);opacity:.45}.item.unlocked{filter:grayscale(0);opacity:1;background:rgba(255,247,173,.18);border-color:#fff7ad}.item.new{animation:itemPop .8s ease}@keyframes itemPop{0%{transform:scale(.7) rotate(-15deg)}55%{transform:scale(1.23) rotate(12deg)}100%{transform:scale(1)}}.rare-box{margin-top:8px;padding:8px;border-radius:16px;background:rgba(255,255,255,.12);text-align:center}.rare-box h3{margin:0 0 6px;color:#fff7ad;font-size:16px}.rare{font-size:34px;filter:grayscale(1);opacity:.42}.rare.unlocked{filter:grayscale(0);opacity:1}.overlay{position:fixed;inset:0;background:rgba(15,23,42,.84);display:none;align-items:center;justify-content:center;z-index:50;padding:12px}.overlay.visible{display:flex}.complete{width:min(590px,94vw);padding:20px;border:5px solid #fff7ad;border-radius:24px;background:linear-gradient(135deg,#0f766e,#8b5cf6,#f472b6);text-align:center;box-shadow:0 20px 44px rgba(0,0,0,.45)}.complete h2{margin:0 0 8px;font-size:36px;text-transform:uppercase}.rare-reward{font-size:78px;animation:rareSpin 1.3s ease infinite}@keyframes rareSpin{0%{transform:rotate(0) scale(1)}50%{transform:rotate(8deg) scale(1.16)}100%{transform:rotate(0) scale(1)}}.sparkle{position:absolute;pointer-events:none;font-size:24px;animation:sparkle .9s ease forwards}@keyframes sparkle{0%{opacity:0;transform:translateY(8px) scale(.7)}40%{opacity:1}100%{opacity:0;transform:translateY(-70px) scale(1.2)}}.confetti{position:fixed;top:-20px;font-size:22px;animation:fall 1.6s linear forwards;z-index:60}@keyframes fall{to{transform:translateY(110vh) rotate(280deg);opacity:.2}}.fail{color:#fecaca}.near{color:#fff7ad}@media(max-width:900px){html,body{overflow:auto}.game{height:auto;min-height:100vh}.main{grid-template-columns:1fr}.scorebar{grid-template-columns:repeat(2,1fr)}.top{grid-template-columns:1fr}.equation{font-size:36px}.grid{grid-template-columns:repeat(6,1fr)}}@media(max-height:700px) and (min-width:901px){.top h1{font-size:21px}.score strong{font-size:19px}.score span{font-size:10px}.big{font-size:36px}.prompt{font-size:15px}.equation{font-size:39px;padding:10px 22px}.feedback{font-size:15px}.rule{font-size:13px}.item{min-height:39px;font-size:21px}.rare{font-size:28px}.collection h2{font-size:19px}.rare-box h3{font-size:14px}}
+</style>
+</head>
+<body>
+<main class="game">
+<header class="top"><a href="index.html">← Instructions</a><h1>Fidget Algebra Quest</h1><div class="pill">8/10 progress • 10/10 rare</div></header>
+<section class="main">
+<section class="play"><div class="scorebar"><div class="score"><span>Level</span><strong id="levelDisplay">1</strong></div><div class="score"><span>Question</span><strong><span id="questionDisplay">1</span>/10</strong></div><div class="score"><span>Level Score</span><strong id="levelScoreDisplay">0</strong></div><div class="score"><span>Total</span><strong id="totalScoreDisplay">0</strong></div><div class="score"><span>Rare</span><strong id="rareCountDisplay">0/5</strong></div></div>
+<div class="card"><div class="level-title" id="levelTitle">Level 1</div><div class="fidget-line"><div class="big" id="mainFidget">🌀</div></div><p class="prompt" id="promptText">Solve the equation to earn a basic fidget.</p><div class="equation" id="equationText">x + 4 = 9</div><div class="answer"><label for="answerInput">x =</label><input id="answerInput" type="number" autocomplete="off"><button id="checkButton" type="button">Check</button></div><div class="feedback" id="feedbackMessage"></div><div class="rule" id="ruleText"></div></div></section>
+<aside class="collection"><h2>Fidget Collection</h2><div class="grid" id="collectionGrid"></div><div class="rare-box"><h3>Saved Rare Rewards</h3><div id="rareGrid"></div></div></aside>
+</section>
+</main>
+<div class="overlay" id="overlay"><div class="complete"><h2 id="overlayTitle">Level Passed!</h2><div class="rare-reward" id="rareEmoji">🌈</div><p id="overlayText">You unlocked a rare fidget!</p><button id="continueButton" type="button">Continue</button></div></div>
+<script>
+document.addEventListener("DOMContentLoaded",function(){
+const RARE_KEY="fidgetAlgebraRareRewardsV2";
+const basic=[["🌀","Spinner"],["🫧","Pop-It"],["🧊","Fidget Cube"],["🪀","Yo-Yo"],["🔗","Tangle"],["🧲","Magnet Set"],["🟣","Squishy"],["🧩","Puzzle Fidget"],["🎲","Clicker Dice"],["🟢","Stress Ball"],["🪩","Glitter Ball"],["⚙️","Gear Fidget"],["🟡","Wobble Ball"],["🔵","Click Ring"],["🧠","Puzzle Cube"]];
+const rare=[["🌈","Rainbow Pop-It"],["✨","Golden Spinner"],["💎","Crystal Fidget Cube"],["🐉","Dragon Squishy"],["🚀","Galaxy Tangle"]];
+const levelNames=["Addition Starter","Subtraction Switch","Mixed Add/Subtract","Multiplication Spinner","Multiplication Master"];
+const $=id=>document.getElementById(id);
+let level=1,question=1,levelScore=0,totalScore=0,current=null,basics=[],rares=loadRares(),waiting=false,finished=false;
+function loadRares(){try{return JSON.parse(localStorage.getItem(RARE_KEY)||"[]")}catch(e){return[]}}
+function saveRares(){localStorage.setItem(RARE_KEY,JSON.stringify(rares))}
+function r(min,max){return Math.floor(Math.random()*(max-min+1))+min}
+function makeQ(){
+let x,a,total,result,eq,ex,type;
+if(level===1){
+x=r(2,25);a=r(2,25);type=r(1,2);
+if(type===1){eq=`x + ${a} = ${x+a}`;ex=`Subtract ${a} from the total to find x.`}
+else{eq=`${a} + x = ${a+x}`;ex=`Subtract ${a} from the total to find x.`}
+}
+else if(level===2){
+type=r(1,2);
+if(type===1){
+a=r(2,20);
+result=r(2,30);
+x=result+a;
+eq=`x - ${a} = ${result}`;
+ex=`Add ${a} to ${result} to find x.`;
+}else{
+x=r(2,30);
+a=r(2,25);
+total=x+a;
+eq=`${total} - x = ${a}`;
+ex=`Think: what number is taken away from ${total} to leave ${a}?`;
+}
+}
+else if(level===3){
+type=r(1,4);
+if(type===1){
+x=r(2,40);a=r(2,30);
+eq=`x + ${a} = ${x+a}`;
+ex=`Subtract ${a} from the total.`;
+}else if(type===2){
+x=r(2,40);a=r(2,30);
+eq=`${a} + x = ${a+x}`;
+ex=`Subtract ${a} from the total.`;
+}else if(type===3){
+a=r(2,25);
+result=r(2,35);
+x=result+a;
+eq=`x - ${a} = ${result}`;
+ex=`Add ${a} to ${result} to find x.`;
+}else{
+x=r(2,35);
+a=r(2,30);
+total=x+a;
+eq=`${total} - x = ${a}`;
+ex=`Think: ${total} minus what equals ${a}?`;
+}
+}
+else if(level===4){
+x=r(2,10);a=r(2,10);type=r(1,2);
+if(type===1){eq=`${a} × x = ${a*x}`;ex=`Use multiplication facts: ${a} times what equals ${a*x}?`}
+else{eq=`x × ${a} = ${a*x}`;ex=`Use multiplication facts: what times ${a} equals ${a*x}?`}
+}
+else{
+x=r(2,12);a=r(2,12);type=r(1,4);
+if(type===1){eq=`${a} × x = ${a*x}`;ex=`Use multiplication facts to find the missing factor.`}
+else if(type===2){eq=`x × ${a} = ${a*x}`;ex=`Use multiplication facts to find the missing factor.`}
+else if(type===3){eq=`${a} groups of x = ${a*x}`;ex=`Find the number in each group.`}
+else{eq=`x groups of ${a} = ${a*x}`;ex=`Find the number of groups.`}
+}
+return{answer:x,equation:eq,explain:ex};
+}
+function draw(newBasic){$("collectionGrid").innerHTML="";basic.forEach((f,i)=>{let d=document.createElement("div");d.className="item";d.textContent=f[0];d.title=f[1];if(basics.includes(i))d.classList.add("unlocked");if(i===newBasic)d.classList.add("new");$("collectionGrid").appendChild(d)});$("rareGrid").innerHTML="";rare.forEach((f,i)=>{let s=document.createElement("span");s.className="rare";s.textContent=f[0];s.title=f[1];if(rares.includes(i))s.classList.add("unlocked");$("rareGrid").appendChild(s)})}
+function update(){$("levelDisplay").textContent=level;$("questionDisplay").textContent=question;$("levelScoreDisplay").textContent=levelScore;$("totalScoreDisplay").textContent=totalScore;$("rareCountDisplay").textContent=rares.length+"/5";$("levelTitle").textContent=`Level ${level}: ${levelNames[level-1]}`;$("mainFidget").textContent=basic[(level+question-2)%basic.length][0]}
+function load(){waiting=false;current=makeQ();$("answerInput").disabled=false;$("checkButton").disabled=false;$("answerInput").value="";$("feedbackMessage").textContent="";$("feedbackMessage").className="feedback";$("ruleText").style.display="none";$("ruleText").textContent="";$("equationText").textContent=current.equation;update();setTimeout(()=>$("answerInput").focus(),80)}
+function sparkle(){for(let i=0;i<10;i++){let s=document.createElement("div");s.className="sparkle";s.textContent=["✨","⭐","💫","🫧"][r(0,3)];s.style.left=r(12,88)+"vw";s.style.top=r(28,78)+"vh";document.body.appendChild(s);setTimeout(()=>s.remove(),950)}}
+function confetti(){for(let i=0;i<32;i++){let c=document.createElement("div");c.className="confetti";c.textContent=["🌀","🫧","✨","💎","🌈"][r(0,4)];c.style.left=r(0,100)+"vw";c.style.animationDelay=(Math.random()*.45)+"s";document.body.appendChild(c);setTimeout(()=>c.remove(),2000)}}
+function basicReward(){let avail=[];for(let i=0;i<basic.length;i++)if(!basics.includes(i))avail.push(i);let chosen=avail.length?avail[r(0,avail.length-1)]:r(0,basic.length-1);if(!basics.includes(chosen))basics.push(chosen);draw(chosen);return basic[chosen]}
+function check(){if(waiting||finished)return;if($("answerInput").value.trim()===""){$("feedbackMessage").textContent="Type an answer first.";$("feedbackMessage").className="feedback wrong";return}waiting=true;$("answerInput").disabled=true;$("checkButton").disabled=true;if(Number($("answerInput").value)===current.answer){levelScore++;totalScore++;let f=basicReward();$("feedbackMessage").textContent=`Correct! You earned ${f[1]} ${f[0]}`;$("feedbackMessage").className="feedback correct";sparkle()}else{$("feedbackMessage").textContent=`Not quite. x = ${current.answer}.`;$("feedbackMessage").className="feedback wrong";draw()}$("ruleText").textContent=current.explain;$("ruleText").style.display="block";setTimeout(next,1150)}
+function next(){if(question<10){question++;load();return}if(levelScore>=8)pass();else retry()}
+function pass(){
+let idx=level-1;
+let perfect=levelScore===10;
+let already=rares.includes(idx);
+draw();
+if(perfect && !already){rares.push(idx);saveRares();draw();confetti();}
+$("overlayTitle").textContent=`Level ${level} Passed!`;
+if(perfect){
+$("rareEmoji").textContent=rare[idx][0];
+$("overlayText").textContent=already?`Perfect 10/10! You had already unlocked the rare ${rare[idx][1]}.`:`Perfect 10/10! You unlocked the rare ${rare[idx][1]}!`;
+}else{
+$("rareEmoji").textContent="✅";
+$("overlayText").innerHTML=`<span class="near">You scored ${levelScore}/10 and can move on. Rare rewards need 10/10.</span>`;
+}
+$("overlay").classList.add("visible");
+}
+function retry(){$("overlayTitle").textContent=`Try Level ${level} Again`;$("rareEmoji").textContent="🔒";$("overlayText").innerHTML=`<span class="fail">You scored ${levelScore}/10. You need 8 correct answers to progress to the next level.</span>`;$("overlay").classList.add("visible")}
+function cont(){$("overlay").classList.remove("visible");if(levelScore>=8){if(level>=5){finish();return}level++}question=1;levelScore=0;load()}
+function finish(){finished=true;$("overlayTitle").textContent="Fidget Master!";$("rareEmoji").textContent="🏆";$("overlayText").textContent="You finished all 5 levels. Rare rewards stay saved on this device."; $("overlay").classList.add("visible");$("continueButton").textContent="Play Again";$("continueButton").onclick=()=>location.reload()}
+$("checkButton").addEventListener("click",check);$("answerInput").addEventListener("keydown",e=>{if(e.key==="Enter")check()});$("continueButton").addEventListener("click",cont);draw();load();
+});
+</script>
+</body>
+</html>

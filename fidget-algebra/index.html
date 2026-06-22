@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fidget Algebra Quest</title>
+<style>
+*{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:Arial,sans-serif;color:white;background:radial-gradient(circle at 12% 18%,rgba(255,255,255,.18),transparent 20%),linear-gradient(135deg,#0f766e,#7c3aed 48%,#f472b6);padding:56px 12px 18px}.back{position:fixed;top:10px;left:10px;background:white;color:#0f766e;padding:9px 12px;border-radius:10px;text-decoration:none;font-weight:bold}.shell{max-width:1060px;margin:auto;border:4px solid rgba(255,255,255,.65);border-radius:24px;background:rgba(0,0,0,.28);box-shadow:0 18px 36px rgba(0,0,0,.3);overflow:hidden}.hero{text-align:center;padding:18px;background:rgba(255,255,255,.14);border-bottom:3px solid rgba(255,255,255,.35)}h1{margin:0;font-size:46px;text-transform:uppercase;text-shadow:4px 4px 0 rgba(0,0,0,.25)}.hero p{margin:8px 0 0;font-size:20px;font-weight:bold}.content{padding:18px;display:grid;grid-template-columns:1fr 1fr;gap:16px}.panel{border:3px solid rgba(255,255,255,.38);border-radius:20px;background:rgba(0,0,0,.24);padding:16px}h2{margin:0 0 10px;font-size:28px}.panel p,.step,.level{font-size:17px;line-height:1.32;font-weight:bold}.steps{display:grid;gap:10px}.step{display:grid;grid-template-columns:50px 1fr;gap:10px;align-items:center;padding:10px;border-radius:16px;background:rgba(255,255,255,.13)}.ico{width:50px;height:50px;border-radius:14px;background:white;color:#0f766e;display:grid;place-items:center;font-size:28px}.rewards{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}.reward{min-height:78px;border:2px solid rgba(255,255,255,.4);border-radius:16px;background:rgba(255,255,255,.13);display:grid;place-items:center;text-align:center;font-weight:bold;font-size:14px}.reward span{font-size:30px}.levels{display:grid;gap:8px}.level{padding:9px;border-radius:13px;background:rgba(255,255,255,.13)}.start{display:flex;align-items:center;justify-content:center;width:100%;min-height:58px;margin-top:14px;border-radius:16px;background:white;color:#0f766e;font-size:25px;font-weight:bold;text-decoration:none;box-shadow:inset 0 -7px 0 rgba(0,0,0,.13)}@media(max-width:850px){.content{grid-template-columns:1fr;padding:12px}h1{font-size:32px}.rewards{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<a class="back" href="../index.html">← Back to Arcade</a>
+<main class="shell">
+<section class="hero"><h1>Fidget Algebra Quest</h1><p>Solve the value of x and collect fidget rewards.</p></section>
+<section class="content">
+<div class="panel">
+<h2>How to Play</h2>
+<p>Each level has <strong>10 questions</strong>.</p>
+<div class="steps">
+<div class="step"><div class="ico">✅</div><div>Get <strong>8 or more</strong> correct to progress to the next level.</div></div>
+<div class="step"><div class="ico">💎</div><div>Get <strong>10 out of 10</strong> to unlock that level’s rare fidget reward.</div></div>
+<div class="step"><div class="ico">🔒</div><div>Rare rewards are remembered on the same device, even if the game restarts.</div></div>
+</div>
+<div class="rewards"><div class="reward"><span>🌀</span>Spinner</div><div class="reward"><span>🫧</span>Pop-It</div><div class="reward"><span>🧊</span>Cube</div><div class="reward"><span>🌈</span>Rare Pop-It</div><div class="reward"><span>💎</span>Crystal Cube</div><div class="reward"><span>🐉</span>Dragon Squishy</div></div>
+</div>
+<div class="panel">
+<h2>Level Path</h2>
+<div class="levels">
+<div class="level">Level 1: x + number = total</div>
+<div class="level">Level 2: x - number = total</div>
+<div class="level">Level 3: mixed one-step addition and subtraction</div>
+<div class="level">Level 4: number × x = total</div>
+<div class="level">Level 5: mixed one-step multiplication facts</div>
+</div>
+<a class="start" href="game.html">Start Game 🎮</a>
+<p>No division, no two-step equations and no negative-number answers.</p>
+</div>
+</section>
+</main>
+</body>
+</html>
