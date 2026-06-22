@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Classroom Arcade</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      color: #ffffff;
+      background:
+        radial-gradient(circle at 12% 12%, rgba(255, 255, 255, 0.16), transparent 18%),
+        radial-gradient(circle at 88% 8%, rgba(255, 255, 255, 0.14), transparent 18%),
+        linear-gradient(135deg, #06283d, #2563eb 46%, #7c3aed);
+      padding: 24px 14px 34px;
+    }
+
+    .hero {
+      max-width: 1100px;
+      margin: 0 auto 24px;
+      padding: 28px 18px;
+      text-align: center;
+      border: 4px solid rgba(255, 255, 255, 0.55);
+      border-radius: 28px;
+      background: rgba(0, 0, 0, 0.26);
+      box-shadow: 0 18px 34px rgba(0, 0, 0, 0.28);
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: 58px;
+      line-height: 1;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-shadow: 4px 4px 0 rgba(0, 0, 0, 0.35);
+    }
+
+    .hero p {
+      margin: 12px 0 0;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      gap: 24px;
+    }
+
+    .game-section {
+      padding: 20px;
+      border-radius: 24px;
+      background: rgba(0, 0, 0, 0.24);
+      border: 3px solid rgba(255, 255, 255, 0.28);
+      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.22);
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .section-title h2 {
+      margin: 0;
+      font-size: 34px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.25);
+    }
+
+    .section-title span {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: #ffffff;
+      color: #1e3a8a;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 28px;
+      box-shadow: inset 0 -5px 0 rgba(0, 0, 0, 0.12);
+    }
+
+    .game-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .game-card {
+      min-height: 250px;
+      padding: 18px;
+      border-radius: 22px;
+      text-decoration: none;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 4px solid rgba(255, 255, 255, 0.55);
+      box-shadow: 0 12px 22px rgba(0, 0, 0, 0.25), inset 0 -9px 0 rgba(0, 0, 0, 0.16);
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .game-card:hover,
+    .game-card:focus {
+      transform: translateY(-4px) scale(1.015);
+      box-shadow: 0 18px 30px rgba(0, 0, 0, 0.32), inset 0 -9px 0 rgba(0, 0, 0, 0.16);
+      outline: none;
+    }
+
+    .game-card h3 {
+      margin: 12px 0 8px;
+      font-size: 27px;
+      line-height: 1.05;
+      text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.22);
+    }
+
+    .game-card p {
+      margin: 0;
+      font-size: 17px;
+      line-height: 1.35;
+      font-weight: bold;
+    }
+
+    .play-label {
+      align-self: flex-start;
+      margin-top: 16px;
+      padding: 9px 13px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.92);
+      color: #0f172a;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .icon {
+      width: 76px;
+      height: 76px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.95);
+      color: #0f172a;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 38px;
+      box-shadow: inset 0 -7px 0 rgba(0, 0, 0, 0.13);
+    }
+
+    .world-cup {
+      background: linear-gradient(135deg, #009f4d, #00b4d8);
+    }
+
+    .place-value {
+      background: linear-gradient(135deg, #7c3aed, #2563eb);
+    }
+
+    .tic-tac-toe {
+      background: linear-gradient(135deg, #ef4444, #22c55e);
+    }
+
+    .movie-patterns {
+      background: linear-gradient(135deg, #111827, #7f1d1d 52%, #f59e0b);
+    }
+
+    .fidget-algebra {
+      background: linear-gradient(135deg, #0f766e, #8b5cf6 52%, #f472b6);
+    }
+
+    .phoneme {
+      background: linear-gradient(135deg, #06b6d4, #3b82f6);
+    }
+
+    .punctuation {
+      background: linear-gradient(135deg, #ef476f, #f59e0b);
+    }
+
+    .footer-note {
+      max-width: 1100px;
+      margin: 22px auto 0;
+      text-align: center;
+      font-size: 14px;
+      opacity: 0.88;
+    }
+
+    @media (max-width: 950px) {
+      .game-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .hero h1 {
+        font-size: 44px;
+      }
+    }
+
+    @media (max-width: 620px) {
+      body {
+        padding: 14px 8px 24px;
+      }
+
+      .hero {
+        padding: 22px 12px;
+      }
+
+      .hero h1 {
+        font-size: 34px;
+      }
+
+      .hero p {
+        font-size: 17px;
+      }
+
+      .game-section {
+        padding: 14px;
+      }
+
+      .section-title h2 {
+        font-size: 25px;
+      }
+
+      .section-title span {
+        width: 40px;
+        height: 40px;
+        font-size: 24px;
+      }
+
+      .game-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .game-card {
+        min-height: 220px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="hero">
+    <h1>Classroom Arcade</h1>
+    <p>Choose a literacy or numeracy game to play.</p>
+  </header>
+
+  <main class="container">
+    <section class="game-section">
+      <div class="section-title">
+        <span>🔢</span>
+        <h2>Numeracy Games</h2>
+      </div>
+
+      <div class="game-grid">
+        <a class="game-card world-cup" href="world-cup-addition/index.html">
+          <div>
+            <div class="icon">⚽</div>
+            <h3>World Cup Addition</h3>
+            <p>Add the squad numbers of World Cup players and move through the levels.</p>
+          </div>
+          <span class="play-label">Play Game</span>
+        </a>
+
+        <a class="game-card place-value" href="place-value-codebreaker/index.html">
+          <div>
+            <div class="icon">1000</div>
+            <h3>Place Value Codebreaker</h3>
+            <p>Guess the mystery number using place value clues.</p>
+          </div>
+          <span class="play-label">Play Game</span>
+        </a>
+
+        <a class="game-card tic-tac-toe" href="maths-tic-tac-toe/index.html">
+          <div>
+            <div class="icon">X O</div>
+            <h3>Maths Tic Tac Toe</h3>
+            <p>Solve an equation before you can claim a square. Play two-player or against the computer.</p>
+          </div>
+          <span class="play-label">Play Game</span>
+        </a>
+
+        <a class="game-card movie-patterns" href="movie-patterns/index.html">
+          <div>
+            <div class="icon">🎬</div>
+            <h3>Movie Pattern Quest</h3>
+            <p>Solve number patterns inspired by well-known kids' movies in a theatre-style challenge.</p>
+          </div>
+          <span class="play-label">Play Game</span>
+        </a>
+
+        <a class="game-card fidget-algebra" href="fidget-algebra/index.html">
+          <div>
+            <div class="icon">🌀</div>
+            <h3>Fidget Algebra Quest</h3>
+            <p>Solve algebra questions, collect basic fidgets and unlock rare fidget rewards.</p>
+          </div>
+          <span class="play-label">Play Game</span>
+        </a>
+
+      </div>
+    </section>
+
+    <section class="game-section">
+      <div class="section-title">
+        <span>🔤</span>
+        <h2>Literacy Games</h2>
+      </div>
+
+      <div class="game-grid">
+        <a class="game-card phoneme" href="phoneme-wordle/index.html">
+          <div>
+            <div class="icon">sh</div>
+            <h3>Phoneme Wordle</h3>
+            <p>Choose a phoneme, digraph or trigraph and crack the word.</p>
+          </div>
+          <span class="play-label">Play Game</span>
+        </a>
+
+        <a class="game-card punctuation" href="punctuation-fix-up/index.html">
+          <div>
+            <div class="icon">?!</div>
+            <h3>Punctuation Fix-Up</h3>
+            <p>Fix sentences using capitals, full stops, end marks and speech marks.</p>
+          </div>
+          <span class="play-label">Play Game</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <p class="footer-note">Tip: refresh with Ctrl + F5 after uploading changes.</p>
+
+</body>
+</html>
