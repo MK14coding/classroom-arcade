@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Time Racer</title>
+<style>
+*{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:Arial,sans-serif;color:white;background:linear-gradient(135deg,#1e3a8a,#0ea5e9 52%,#facc15);padding:54px 12px 18px}.back{position:fixed;top:10px;left:10px;background:white;color:#1e3a8a;padding:9px 12px;border-radius:10px;text-decoration:none;font-weight:bold}.shell{max-width:1080px;margin:auto;border:4px solid rgba(255,255,255,.7);border-radius:24px;background:rgba(0,0,0,.28);overflow:hidden}.hero{text-align:center;padding:16px;background:rgba(255,255,255,.15)}h1{margin:0;font-size:48px;text-transform:uppercase;text-shadow:4px 4px 0 rgba(0,0,0,.25)}.hero p{font-size:19px;font-weight:bold;margin:8px 0 0}.content{padding:16px;display:grid;grid-template-columns:1fr 1fr;gap:14px}.panel{border:3px solid rgba(255,255,255,.38);border-radius:20px;background:rgba(0,0,0,.24);padding:14px}h2{margin:0 0 9px;font-size:27px}.step,.level,p{font-size:16px;line-height:1.32;font-weight:bold}.steps,.levels{display:grid;gap:8px}.step,.level{padding:9px;border-radius:15px;background:rgba(255,255,255,.13)}.car-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:10px}.car-option{min-height:96px;border:3px solid rgba(255,255,255,.45);border-radius:16px;background:rgba(255,255,255,.12);color:white;font-weight:bold;cursor:pointer}.car-option.selected{background:white;color:#1e3a8a;border-color:#fef08a}.car-preview{height:56px;margin-bottom:4px}.start{display:flex;align-items:center;justify-content:center;width:100%;min-height:56px;margin-top:12px;border-radius:16px;background:white;color:#1e3a8a;font-size:24px;font-weight:bold;text-decoration:none;border:none;cursor:pointer}.upgrade-list{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:10px}.upgrade{padding:8px;border-radius:14px;background:rgba(255,255,255,.13);font-weight:bold}@media(max-width:850px){.content{grid-template-columns:1fr}h1{font-size:34px}.car-grid{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<a class="back" href="../index.html">← Back to Arcade</a>
+<main class="shell">
+<section class="hero"><h1>Time Racer</h1><p>Choose your car, read the clock, earn Time Tokens and build your garage.</p></section>
+<section class="content">
+<div class="panel">
+<h2>How to Play</h2>
+<p>Look carefully at the analogue clock and choose the correct digital time.</p>
+<div class="steps">
+<div class="step">🕐 Level 1 starts with o'clock times.</div>
+<div class="step">🕧 Level 2 introduces half-past times.</div>
+<div class="step">🕒 Level 3 introduces quarter-past times.</div>
+<div class="step">⏱️ Correct answers earn Time Tokens for the garage.</div>
+</div>
+<h2 style="margin-top:14px">Garage Upgrades</h2>
+<div class="upgrade-list">
+<div class="upgrade">⭐ Stickers</div><div class="upgrade">🛞 Rims</div><div class="upgrade">🏁 Wings</div><div class="upgrade">🔥 Boosts</div><div class="upgrade">⚙️ Engines</div><div class="upgrade">🏆 Champion style</div>
+</div>
+</div>
+<div class="panel">
+<h2>Choose Your Car</h2>
+<p>Your car choice will appear in the race and in the garage.</p>
+<div class="car-grid" id="carGrid"></div>
+<button class="start" id="startBtn" type="button">Start Race 🏎️</button>
+<div class="levels" style="margin-top:12px">
+<div class="level">Level 1: O'clock</div><div class="level">Level 2: Half past</div><div class="level">Level 3: Quarter past</div><div class="level">Level 4: Mixed times</div><div class="level">Level 5: Championship</div>
+</div>
+</div>
+</section>
+</main>
+<script>
+const cars=[{"id": "red", "name": "Lightning Red", "primary": "#ef4444", "secondary": "#991b1b"}, {"id": "blue", "name": "Ocean Blue", "primary": "#0ea5e9", "secondary": "#1e3a8a"}, {"id": "yellow", "name": "Sunshine Yellow", "primary": "#facc15", "secondary": "#ca8a04"}, {"id": "green", "name": "Turbo Green", "primary": "#22c55e", "secondary": "#166534"}, {"id": "purple", "name": "Purple Rocket", "primary": "#a855f7", "secondary": "#581c87"}];
+let selected=localStorage.getItem("timeRacerCarV2")||"red";
+function svg(car){return `<svg viewBox="0 0 160 70" width="100%" height="56" aria-hidden="true"><rect x="34" y="25" width="94" height="24" rx="10" fill="${car.primary}"/><path d="M55 25 L72 10 H105 L120 25 Z" fill="${car.secondary}"/><circle cx="52" cy="52" r="10" fill="#111827"/><circle cx="112" cy="52" r="10" fill="#111827"/><circle cx="52" cy="52" r="5" fill="#e5e7eb"/><circle cx="112" cy="52" r="5" fill="#e5e7eb"/></svg>`}
+function draw(){const grid=document.getElementById("carGrid");grid.innerHTML="";cars.forEach(c=>{const b=document.createElement("button");b.className="car-option"+(c.id===selected?" selected":"");b.type="button";b.innerHTML=`<div class="car-preview">${svg(c)}</div><div>${c.name}</div>`;b.addEventListener("click",()=>{selected=c.id;localStorage.setItem("timeRacerCarV2",selected);draw();});grid.appendChild(b);})}
+document.getElementById("startBtn").addEventListener("click",()=>{localStorage.setItem("timeRacerCarV2",selected);location.href="game.html?car="+encodeURIComponent(selected);});
+draw();
+</script>
+</body>
+</html>
